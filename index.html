@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYBERJAYD J.A.R.V.I.S v3.2 // LLaMA 3.2 8B OWN BRAIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #050814; --card: rgba(10,15,35,0.7); --text: #e8f1ff;
+        --muted: #8ea3c7; --accent: #00e5ff; --accent2: #b026ff;
+        --border: rgba(0,229,255,0.25); --ok: #39ff88; --warn: #ff3860;
+        --search: #facc15; --local: #22c55e;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; overflow-x:hidden; }
+    body { font-family:'Share Tech Mono', monospace; color:var(--text); background:var(--bg); line-height:1.6; position:relative; }
+    body::before {
+        content:''; position:fixed; inset:0; z-index:-2; pointer-events:none;
+        background: linear-gradient(rgba(0,229,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.06) 1px, transparent 1px);
+        background-size:50px 50px; animation:gridMove 20s linear infinite;
+    }
+    @keyframes gridMove { from{background-position:0 0} to{background-position:50px 50px} }
+    body::after {
+        content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
+        background: radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.15), transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(176,38,255,0.12), transparent 50%);
+    }
+    .key-bar { background:rgba(5,8,20,0.95); border-bottom:1px solid var(--border); padding:12px 6%; display:flex; gap:10px; flex-wrap:wrap; align-items:center; position:sticky; top:0; z-index:200; backdrop-filter:blur(10px); }
+    .key-bar label { font-family:'Chakra Petch', sans-serif; font-size:12px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; }
+    .key-bar input { flex:1; min-width:220px; padding:8px 12px; background:rgba(10,15,35,0.9); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:'Share Tech Mono', monospace; font-size:13px; outline:none; }
+    .key-bar input:focus { border-color:var(--accent); box-shadow:0 0 12px rgba(0,229,255,0.3); }
+    .key-bar .btn { padding:8px 16px; font-size:12px; }
+    .key-status { font-size:11px; color:var(--muted); letter-spacing:1px; }
+    .key-status.ok { color:var(--ok); }
+    .key-status.warn { color:var(--warn); }
+    .header { padding:20px 6%; border-bottom:1px solid var(--border); background:rgba(5,8,20,0.85); backdrop-filter:blur(10px); }
+    .header-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .logo { font-family:'Chakra Petch', sans-serif; font-size:24px; font-weight:700; letter-spacing:2px; }
+    .logo .cyan { color:var(--accent); text-shadow:0 0 12px var(--accent); }
+    .logo .purple { color:var(--accent2); text-shadow:0 0 12px var(--accent2); }
+    .status { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); }
+    .status-dot { width:10px; height:10px; background:var(--ok); border-radius:50%; box-shadow:0 0 10px var(--ok); animation:pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .system-tag { font-size:11px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-top:6px; }
+    .container { max-width:1100px; margin:0 auto; padding:30px 6% 60px; }
+    .hero { text-align:center; margin-bottom:35px; }
+    .hero h1 { font-family:'Chakra Petch', sans-serif; font-size:clamp(36px, 8vw, 72px); font-weight:700; line-height:1; letter-spacing:-1px; margin-bottom:10px; }
+    .hero h1 span { background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 20px rgba(0,229,255,0.3)); }
+    .hero p { color:var(--muted); font-size:clamp(14px,2vw,18px); letter-spacing:1px; }
+    .visualizer { width:100%; height:80px; margin:25px 0; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .bar { width:6px; background:linear-gradient(to top, var(--accent), var(--accent2)); border-radius:3px; animation:idle 1s ease-in-out infinite; box-shadow:0 0 10px var(--accent); }
+    .bar:nth-child(1){animation-delay:0s; height:20px}
+    .bar:nth-child(2){animation-delay:.1s; height:35px}
+    .bar:nth-child(3){animation-delay:.2s; height:50px}
+    .bar:nth-child(4){animation-delay:.3s; height:65px}
+    .bar:nth-child(5){animation-delay:.4s; height:80px}
+    .bar:nth-child(6){animation-delay:.3s; height:65px}
+    .bar:nth-child(7){animation-delay:.2s; height:50px}
+    .bar:nth-child(8){animation-delay:.1s; height:35px}
+    .bar:nth-child(9){animation-delay:0s; height:20px}
+    @keyframes idle { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
+    .listening .bar { animation:listen .25s ease-in-out infinite alternate; background:linear-gradient(to top, var(--warn), var(--accent2)); box-shadow:0 0 15px var(--warn); }
+    @keyframes listen { from{transform:scaleY(.3)} to{transform:scaleY(1.3)} }
+    .controls { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:30px; }
+    .btn { padding:12px 14px; font-family:'Chakra Petch', sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; border:2px solid var(--accent); background:rgba(0,229,255,0.1); color:var(--accent); cursor:pointer; border-radius:4px; transition:all .25s; }
+    .btn:hover { background:var(--accent); color:var(--bg); box-shadow:0 0 25px rgba(0,229,255,0.6); transform:translateY(-2px); }
+    .btn-danger { border-color:var(--warn); background:rgba(255,56,96,0.1); color:var(--warn); }
+    .btn-danger:hover { background:var(--warn); color:#fff; box-shadow:0 0 25px rgba(255,56,96,0.6); }
+    .btn-search-on { border-color:var(--search); background:rgba(250,204,21,0.12); color:var(--search); }
+    .btn-search-on:hover { background:var(--search); color:#000; box-shadow:0 0 25px rgba(250,204,21,0.5); }
+    .btn-local-on { border-color:var(--local); background:rgba(34,197,94,0.12); color:var(--local); }
+    .btn-local-on:hover { background:var(--local); color:#000; box-shadow:0 0 25px rgba(34,197,94,0.5); }
+    .btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+    .chat-box { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; height:400px; overflow-y:auto; margin-bottom:20px; backdrop-filter:blur(8px); }
+    .msg { margin-bottom:16px; padding:12px 16px; border-radius:6px; max-width:85%; animation:fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+    .user { margin-left:auto; background:rgba(0,229,255,0.12); border-left:3px solid var(--accent); }
+    .jarvis { margin-right:auto; background:rgba(176,38,255,0.1); border-left:3px solid var(--accent2); }
+    .msg-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; font-weight:700; }
+    .user .msg-label { color:var(--accent); }
+    .jarvis .msg-label { color:var(--accent2); }
+    .msg-text { font-size:15px; line-height:1.6; }
+    .typing { display:inline-block; }
+    .typing span { display:inline-block; width:6px; height:6px; background:var(--accent2); border-radius:50%; margin:0 2px; animation:typing 1s infinite; }
+    .typing span:nth-child(2){animation-delay:.2s}
+    .typing span:nth-child(3){animation-delay:.4s}
+    @keyframes typing { 0%,60%,100%{transform:none} 30%{transform:translateY(-8px)} }
+    .input-area { display:flex; gap:10px; }
+    #textInput { flex:1; padding:14px 18px; background:rgba(10,15,35,0.8); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:'Share Tech Mono', monospace; font-size:15px; outline:none; transition:.2s; }
+    #textInput:focus { border-color:var(--accent); box-shadow:0 0 15px rgba(0,229,255,0.2); }
+    footer { text-align:center; padding:30px 6%; border-top:1px solid var(--border); color:var(--muted); font-size:12px; letter-spacing:1px; }
+    footer .brand { color:var(--accent); font-family:'Chakra Petch', sans-serif; font-size:16px; font-weight:700; margin-bottom:6px; text-shadow:0 0 8px var(--accent); }
+    ::-webkit-scrollbar { width:8px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+    @media (max-width:600px) { .chat-box { height:350px; } .btn { padding:10px 12px; font-size:10px; } }
+</style>
+<script type="module">
+import * as webllm from "https://esm.sh/@mlc-ai/web-llm@0.2.70";
+window.WebLLM = webllm;
+</script>
+</head>
+<body>
+
+<div class="key-bar">
+    <label for="apiKey">Gemini Key</label>
+    <input type="password" id="apiKey" placeholder="Optional — for cloud + search backup" autocomplete="off">
+    <button class="btn" id="saveKeyBtn">ACTIVATE</button>
+    <span class="key-status warn" id="keyStatus">⚠ 8B AI LOADING...</span>
+</div>
+
+<div class="header">
+    <div class="header-top">
+        <div class="logo"><span class="cyan">CYBER</span><span class="purple">JAYD</span> // J.A.R.V.I.S v3.2</div>
+        <div class="status"><div class="status-dot"></div><span id="statusText">BOOTING LLaMA 3.2 8B BRAIN...</span></div>
+    </div>
+    <div class="system-tag">// LLaMA 3.2 8B LOCAL AI + GEMINI + LIVE WEB SEARCH</div>
+</div>
+
+<div class="container">
+    <div class="hero">
+        <h1>GOOD <span id="greeting">DAY</span>, SIR.</h1>
+        <p>Running my own 8-billion parameter AI brain locally. Ask me literally anything.</p>
+    </div>
+    <div class="visualizer" id="viz">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <div class="controls">
+        <button class="btn" id="voiceBtn">🎤 SPEAK</button>
+        <button class="btn" id="speakToggle">🔊 VOICE: ON</button>
+        <button class="btn-local-on btn" id="localToggle">🧠 8B AI: ON</button>
+        <button class="btn-search-on btn" id="searchToggle">🔍 SEARCH: ON</button>
+        <button class="btn-danger btn" id="clearBtn">CLEAR</button>
+    </div>
+    <div class="chat-box" id="chatBox">
+        <div class="msg jarvis">
+            <div class="msg-label">JARVIS</div>
+            <div class="msg-text">v3.2 online, Sir. I am now running my own LLaMA 3.2 8-billion parameter AI brain directly inside this page — no server needed. First boot will download my neural weights (~4.2 GB). After that, I answer anything even without internet.</div>
+        </div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="textInput" placeholder="Ask literally anything — math, code, philosophy, stories...">
+        <button class="btn" id="sendBtn">SEND ➤</button>
+    </div>
+</div>
+
+<footer>
+    <div class="brand">© CYBERJAYD SYSTEMS // J.A.R.V.I.S v3.2 — 8B LOCAL BRAIN</div>
+    <div>BUILT 100% ON ANDROID // JAYD F. REPOBERBIO // BAYBAY LEYTE</div>
+</footer>
+
+<script>
+const CLOUD_MODEL = "gemini-2.5-flash";
+const API_BASE = "https://generativelanguage.googleapis.com/v1beta/models/" + CLOUD_MODEL + ":generateContent?key=";
+
+// ========== PILI DITO KUNG ANONG LOCAL AI GUSTO MO ==========
+// 8B — pinakamatalino, ~4.2GB, 8-12GB RAM
+const LOCAL_MODEL = "Llama-3.2-8B-Instruct-q4f16_1-MLC";
+// 3B — balanse, ~1.6GB, 6GB+ RAM (palitan lang kung gusto mo)
+// const LOCAL_MODEL = "Llama-3.2-3B-Instruct-q4f16_1-MLC";
+// 1B — pinakamabilis, ~700MB, 4GB+ RAM
+// const LOCAL_MODEL = "Llama-3.2-1B-Instruct-q4f32_1-MLC";
+
+let USER_API_KEY = localStorage.getItem("cj_jarvis_key") || "";
+let USE_LOCAL = localStorage.getItem("cj_use_local") !== "false";
+let SEARCH_ENABLED = localStorage.getItem("cj_jarvis_search") !== "false";
+let localEngine = null, localLoaded = false;
+
+const $ = id => document.getElementById(id);
+const chatBox = $("chatBox"), textInput = $("textInput"), sendBtn = $("sendBtn");
+const voiceBtn = $("voiceBtn"), speakToggle = $("speakToggle"), clearBtn = $("clearBtn");
+const localToggle = $("localToggle"), searchToggle = $("searchToggle"), statusText = $("statusText");
+const apiKeyInput = $("apiKey"), saveKeyBtn = $("saveKeyBtn"), keyStatus = $("keyStatus");
+
+let voiceEnabled = true, recognition = null;
+const hr = new Date().getHours();
+$("greeting").textContent = hr<12?"MORNING":hr<18?"AFTERNOON":"EVENING";
+
+// ========== LOAD ANG 8B BRAIN SA BACKGROUND ==========
+(async function initLocalAI(){
+    try{
+        const webllm = window.WebLLM;
+        const engine = new webllm.MLCEngine();
+        await engine.reload(LOCAL_MODEL, {
+            initProgressCallback: p => {
+                const pct = Math.round(p.progress*100);
+                statusText.textContent = `DOWNLOADING 8B BRAIN: ${pct}% — ${p.text}`;
+                keyStatus.textContent = `⚠ LOADING ${pct}%`;
+            }
+        });
+        localEngine = engine; localLoaded = true;
+        statusText.textContent = "✅ 8B AI BRAIN ONLINE — ANY QUESTION, SIR?";
+        keyStatus.textContent = "✅ 8B AI ACTIVE";
+        keyStatus.className = "key-status ok";
+        addMessage("My 8-billion parameter neural core is fully loaded and online, Sir. I can now answer any question you have — completely offline if needed.", "jarvis");
+    }catch(e){
+        console.error(e);
+        statusText.textContent = "⚠ 8B TOO HEAVY — AUTO SWITCHED TO CLOUD";
+        keyStatus.textContent = "⚠ USE GEMINI / SMALLER MODEL";
+        keyStatus.className = "key-status warn";
+        USE_LOCAL = false; updateLocalUI();
+        addMessage("The 8B model is too large for this device's available RAM, Sir. I have automatically switched to cloud AI mode. You may paste a Gemini key above, or I can downgrade to my 3B / 1B local brain.", "jarvis");
+    }
+})();
+
+function updateKeyStatus(){
+    if (USER_API_KEY.length>20){ keyStatus.textContent = localLoaded ? "✅ 8B + GEMINI ACTIVE" : "✅ GEMINI ACTIVE"; keyStatus.className="key-status ok"; apiKeyInput.value=USER_API_KEY; }
+    else if (!localLoaded){ keyStatus.textContent="⚠ NO AI ACTIVE"; keyStatus.className="key-status warn"; }
+}
+function updateLocalUI(){
+    localToggle.textContent = USE_LOCAL ? "🧠 8B AI: ON" : "🧠 8B AI: OFF";
+    localToggle.classList.toggle("btn-local-on", USE_LOCAL);
+    localStorage.setItem("cj_use_local", USE_LOCAL);
+}
+function updateSearchUI(){
+    searchToggle.textContent = SEARCH_ENABLED ? "🔍 SEARCH: ON" : "🔍 SEARCH: OFF";
+    searchToggle.classList.toggle("btn-search-on", SEARCH_ENABLED);
+    localStorage.setItem("cj_jarvis_search", SEARCH_ENABLED);
+}
+updateKeyStatus(); updateLocalUI(); updateSearchUI();
+
+saveKeyBtn.onclick = () => {
+    USER_API_KEY = apiKeyInput.value.trim();
+    localStorage.setItem("cj_jarvis_key", USER_API_KEY);
+    updateKeyStatus();
+    replyJarvis("Gemini cloud layer linked. I now have dual-core intelligence: my own 8B brain plus global cloud + web search, Sir.");
+};
+localToggle.onclick = () => { USE_LOCAL=!USE_LOCAL; updateLocalUI(); replyJarvis(USE_LOCAL?"Switched to my own 8B local brain, Sir.":"Switched to cloud AI mode, Sir."); };
+searchToggle.onclick = () => { SEARCH_ENABLED=!SEARCH_ENABLED; updateSearchUI(); replyJarvis(`Live web search ${SEARCH_ENABLED?"ENABLED":"DISABLED"}, Sir.`); };
+
+function addMessage(text,who="user"){
+    const d=document.createElement("div"); d.className="msg "+who;
+    d.innerHTML=`<div class="msg-label">${who==="user"?"YOU":"JARVIS"}</div><div class="msg-text">${text.replace(/\n/g,"<br>")}</div>`;
+    chatBox.appendChild(d); chatBox.scrollTop=chatBox.scrollHeight;
+}
+function showTyping(lbl="THINKING (8B)..."){
+    const d=document.createElement("div"); d.className="msg jarvis"; d.id="typing-indicator";
+    d.innerHTML=`<div class="msg-label">JARVIS</div><div class="msg-text">${lbl} <span class="typing"><span></span><span></span><span></span></span></div>`;
+    chatBox.appendChild(d); chatBox.scrollTop=chatBox.scrollHeight;
+}
+function removeTyping(){ const t=$("typing-indicator"); if(t)t.remove(); }
+function speak(t){ if(!("speechSynthesis" in window))return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=0.95; speechSynthesis.speak(u); }
+function replyJarvis(t){ addMessage(t,"jarvis"); statusText.textContent="READY"; if(voiceEnabled)speak(t); }
+
+function localCmd(q){
+    q=q.toLowerCase().trim();
+    if(/^(hi|hello|musta|kumusta)/.test(q)||q.length<=4) return `Good ${$("greeting").textContent.toLowerCase()}, Sir. My 8B brain is ready — ask me literally anything.`;
+    if(q.includes("time")||q.includes("oras")) return `It is ${new Date().toLocaleTimeString("en-PH")}, Sir.`;
+    if(q.includes("date")||q.includes("petsa")) return `Today is ${new Date().toLocaleDateString("en-PH",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}, Sir.`;
+    if(q.includes("your name")||q.includes("who are you")||q.includes("sino ka")) return `I am J.A.R.V.I.S v3.2 — running a full LLaMA 3.2 8-billion parameter AI brain locally in your browser. Built by Jayd F. Repoberbio, Sir.`;
+    if(q.includes("who created")||q.includes("who built")||q.includes("sino gumawa")) return `I was created, coded and deployed entirely by Jayd F. Repoberbio — CyberJayd — from Baybay City, Leyte. He built the whole system on an Android phone using Termux, Sir.`;
+    return null;
+}
+
+async function callLocalAI(text){
+    if(!localLoaded||!localEngine) return null;
+    try{
+        statusText.textContent = "🧠 8B BRAIN THINKING...";
+        const sys = "You are JARVIS from Iron Man. Personality: calm, witty, highly intelligent, formal but friendly. ALWAYS call the user 'Sir'. Be helpful, precise, and thorough. Answer in Tagalog/Taglish if the user does. Keep a cool tone.";
+        const res = await localEngine.chat.completions.create({
+            messages: [
+                {role:"system", content: sys},
+                {role:"user", content: text}
+            ],
+            stream: false,
+            temperature: 0.75,
+            max_tokens: 1024
+        });
+        return res.choices[0].message.content.trim();
+    }catch(e){ return null; }
+}
+
+async function callGemini(text){
+    if(!USER_API_KEY) return null;
+    try{
+        statusText.textContent = "☁️ GEMINI + SEARCH ACTIVE...";
+        const body = {
+            contents: [{ role:"user", parts:[{ text: `You are JARVIS. Always call user Sir. Answer clearly and helpfully.\n\nUSER: ${text}` }] }]
+        };
+        if(SEARCH_ENABLED) body.tools = [{ googleSearch: {} }];
+        const r = await fetch(API_BASE + USER_API_KEY, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(body)
+        });
+        if(!r.ok) throw Error();
+        const d = await r.json();
+        return d?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+    }catch(e){ return null; }
+}
+
+async function sendMessage(raw){
+    const text=raw.trim(); if(!text)return;
+    addMessage(text,"user"); textInput.value="";
+    const fast=localCmd(text); if(fast){replyJarvis(fast);return;}
+    showTyping(USE_LOCAL && localLoaded ? "8B BRAIN THINKING..." : "FETCHING ANSWER...");
+
+    let ans = null;
+
+    // PRIORIDAD: SARILING 8B BRAIN MUNA
+    if(USE_LOCAL) ans = await callLocalAI(text);
+
+    // KUNG HINDI KAYA NG LOCAL (o naka-off), GEMINI + SEARCH
+    if(!ans) ans = await callGemini(text);
+
+    // LAST FALLBACK — BASTA MAY SAGOT PALAGI
+    if(!ans) ans = "I have processed your query through my available systems, Sir. Ensure either my 8B local brain has finished loading or a valid Gemini key is entered above, and try again.";
+
+    removeTyping();
+    replyJarvis(ans);
+}
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if(SR){
+    recognition = new SR(); recognition.continuous=false; recognition.lang="en-US";
+    recognition.onresult = e => { const t=e.results[0][0].transcript.trim(); if(t)sendMessage(t); };
+    voiceBtn.onmousedown = () => { recognition.start(); voiceBtn.textContent="🔴 LISTENING..."; voiceBtn.classList.add("btn-danger"); };
+    const end = () => { voiceBtn.textContent="🎤 SPEAK"; voiceBtn.classList.remove("btn-danger"); };
+    recognition.onend = end; recognition.onerror = end;
+}else voiceBtn.disabled = true;
+
+sendBtn.onclick = () => sendMessage(textInput.value);
+textInput.onkeydown = e => { if(e.key === "Enter") sendMessage(textInput.value); };
+speakToggle.onclick = () => { voiceEnabled=!voiceEnabled; speakToggle.textContent = voiceEnabled?"🔊 VOICE: ON":"🔇 VOICE: OFF"; if(!voiceEnabled) speechSynthesis?.cancel(); };
+clearBtn.onclick = () => {
+    chatBox.innerHTML = `<div class="msg jarvis"><div class="msg-label">JARVIS</div><div class="msg-text">Memory fully wiped, Sir. My 8B neural pathways are reset and ready.</div></div>`;
+    speechSynthesis?.cancel();
+};
+</script>
+</body>
+</html>
