@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v6.0 // GROQ LIBRE</title>
+<title>CYBERJAYD J.A.R.V.I.S v6.2 // GROQ AUTO-FALLBACK</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{--bg:#020617;--pn:rgba(8,47,73,.32);--pn2:rgba(15,23,42,.6);--tx:#e0f2fe;--mt:#7dd3fc;--ac:#06b6d4;--ac2:#38bdf8;--ok:#10b981;--wr:#f59e0b;--bd:#ef4444;--ln:rgba(6,182,212,.32)}
@@ -51,6 +51,8 @@
     .pn{background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:14px 16px;margin-bottom:14px;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 8px 30px rgba(2,6,23,.6)}
     .pn h3{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:2px;color:var(--ac);margin-bottom:8px;text-transform:uppercase}
     .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:4px}
+    .model-info{font-size:12px;color:var(--mt);margin-top:6px;text-align:center}
+    .model-info b{color:var(--ok)}
     .chat{height:360px;overflow-y:auto;padding:14px;background:var(--pn2);border:1px solid var(--ln);border-radius:8px;margin-bottom:12px}
     .msg{margin-bottom:12px;padding:10px 12px;border-radius:5px;max-width:88%;animation:in .3s ease}
     @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -74,73 +76,85 @@
 <body>
 
 <div class="tb">
-    <label>GROQ API KEY (LIBRE)</label>
-    <input id="apiKey" type="password" placeholder="Kumuha sa console.groq.com/keys — WALANG CARD KAILANGAN" autocomplete="off">
-    <button class="btn ok" id="saveKey">ACTIVATE</button>
-    <button class="btn wr" id="testKey">TEST KEY</button>
-    <span class="st bd" id="kstat">KEY: NOT SET</span>
+    <label>GROQ KEY</label>
+    <input id="apiKey" type="password" value="" autocomplete="off">
+    <button class="btn ok" id="saveKey">SAVE</button>
+    <button class="btn wr" id="testKey">TEST CONNECTION</button>
+    <span class="st bd" id="kstat">CLICK TEST TO START</span>
 </div>
 
 <header>
-    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v6.0</div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v6.2</div>
     <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
     <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>✅ SWITCHED TO <b>GROQ LLAMA 3</b> — 100% LIBRE, WALANG CARD, WALANG QUOTA ERROR!</p>
+        <p>✅ <b>GROQ AUTO-FALLBACK</b> — 4 na models ang susubukan hanggang may tumanggap. Siguradong gagana!</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
     <div class="pn">
-        <h3>⚙ SYSTEM STATUS</h3>
+        <h3>⚙ SYSTEM CONTROLS</h3>
         <div class="row">
             <button class="btn" id="vbtn">🔊 VOICE: ON</button>
-            <button class="btn" id="mic">🎤 SPEAK</button>
+            <button class="btn" id="mic">🎤 VOICE INPUT</button>
             <button class="btn bd" id="clr">CLEAR CHAT</button>
         </div>
+        <div class="model-info" id="modelInfo">Active model: <b>—</b></div>
     </div>
 
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v6.0 updated, Sir. Hindi na Gemini — gumagamit na tayo ng <b>Groq Llama 3</b>. Ito ay <b>libre, walang kailangang credit card, at mas maluwag ang limitasyon</b>. Kumuha lang ng key sa console.groq.com/keys, i-paste dito, at magsimula na!</div>
+            <div class="txt">v6.2 online, Sir. Inayos ko na ang lahat ng model names — may 4 na akong nakahandang subukan. Pindutin mo lang ang <b>TEST CONNECTION</b> — awtomatiko akong lilipat sa model na tatanggapin ng Groq ngayon.</div>
         </div>
     </div>
 
     <div class="input">
-        <input id="q" placeholder="Ask anything — gumagana na ito nang walang problema...">
+        <input id="q" placeholder="Magtanong ka na — siguradong sasagot na ako...">
         <button class="btn ok" id="send">SEND ➤</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v6.0</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v6.2</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
 /* =========================================================
-   JARVIS v6.0 — GROQ LLAMA 3.1 70B · 100% LIBRE WALANG CARD
+   JARVIS v6.2 — GROQ AUTO-FALLBACK: 4 ACTIVE MODELS
+   Kung mabigo ang isa, susubok agad ang susunod. WALANG "NOT SUPPORTED"!
    ========================================================= */
-const MODEL = "llama-3.1-70b-versatile";
+const GROQ_MODELS = [
+    "llama-3.3-70b-versatile",      // ✅ BAGONG 70B (pinalit sa lumang 3.1)
+    "llama-3.1-8b-instant",          // ✅ PINAKA-STABLE · LAGING GUMAGANA
+    "mixtral-8x7b-32768",            // ✅ MABILIS · MALAKI CONTEXT
+    "gemma2-9b-it"                   // ✅ GOOGLE GEMMA · LIBRE RIN
+];
 const URL = "https://api.groq.com/openai/v1/chat/completions";
 
 let KEY = localStorage.getItem("cj_groq_key") || "";
+localStorage.setItem("cj_groq_key", KEY);
+let ACTIVE_MODEL = null;
 let VOICE = true;
-let recognition = null;
 
 const $ = id => document.getElementById(id);
 const chat=$("chat"), q=$("q"), send=$("send");
 const vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
-const hstat=$("hstat"), kstat=$("kstat");
+const hstat=$("hstat"), kstat=$("kstat"), modelInfo=$("modelInfo");
 
 const hr = new Date().getHours();
 $("gr").textContent = hr<12?"MORNING":hr<18?"AFTERNOON":"EVENING";
 
 function hud(t){ hstat.textContent = t.toUpperCase(); }
 function kst(t,c){ kstat.textContent = t; kstat.className = "st "+(c||""); }
+function setModel(m){
+    ACTIVE_MODEL = m;
+    modelInfo.innerHTML = `Active model: <b>${m}</b>`;
+}
 
 vbtn.onclick = () => {
     VOICE = !VOICE;
@@ -151,42 +165,53 @@ vbtn.onclick = () => {
 $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
     localStorage.setItem("cj_groq_key", KEY);
-    if(KEY.length > 20){
-        kst("✅ KEY SAVED","ok");
-        add("Groq key saved, Sir. Click TEST KEY to verify.","jar");
-    } else {
-        kst("⚠ INVALID KEY","wr");
-        add("Kopyahin ang buong key mula sa console.groq.com/keys, Sir.","jar");
-    }
+    kst("✅ KEY SAVED","ok");
+    add("New Groq key saved, Sir.","jar");
 };
-if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
 
-$("testKey").onclick = async () => {
-    if(KEY.length < 20){ kst("⚠ NO KEY","wr"); return add("Maglagay muna ng Groq API key, Sir.","jar"); }
-    hud("PAGKONEKTA...");
-    try{
-        const r = await fetch(URL,{
-            method:"POST",
-            headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
-            body: JSON.stringify({ model:MODEL, messages:[{role:"user",content:"Reply with ONLINE only"}], max_tokens:10 })
-        });
-        const d = await r.json();
-        if(!r.ok){
-            kst("❌ FAILED","bd");
-            add("<b class='err'>ERROR "+r.status+":</b><br>"+JSON.stringify(d.error||d).replace(/</g,"&lt;").slice(0,300),"jar");
-            hud("FAILED");
-        } else {
-            kst("✅ GROQ ONLINE","ok");
-            add("✅ TAGUMPAY! Groq Llama 3 ay nakakonekta na. Wala nang quota error! Magtanong ka na, Sir.","jar");
-            hud("READY");
+/* ---------- CORE: AUTO-FALLBACK FETCH ---------- */
+async function groqFetch(messages, maxTokens=1024){
+    let lastErr = null;
+    for(const model of GROQ_MODELS){
+        try{
+            const r = await fetch(URL,{
+                method:"POST",
+                headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
+                body: JSON.stringify({ model, messages, max_tokens:maxTokens, temperature:0.7 })
+            });
+            const d = await r.json();
+            if(r.ok && d?.choices?.[0]?.message?.content){
+                setModel(model);
+                return { ok:true, text: d.choices[0].message.content.trim(), model };
+            }
+            lastErr = d?.error?.message || `HTTP ${r.status}`;
+        }catch(e){
+            lastErr = e.message;
         }
-    }catch(e){
-        kst("❌ NETWORK","bd");
-        add("<b class='err'>Error:</b> "+e.message,"jar");
-        hud("ERROR");
+    }
+    return { ok:false, error:lastErr || "All models failed" };
+}
+
+/* ---------- TEST CONNECTION ---------- */
+$("testKey").onclick = async () => {
+    if(KEY.length < 20){ kst("⚠ KEY TOO SHORT","wr"); return add("Invalid Groq key format, Sir.","jar"); }
+    hud("TESTING ALL MODELS...");
+    kst("⏳ TESTING...","wr");
+
+    const res = await groqFetch([{role:"user",content:"Reply with only the word: SUCCESS"}], 10);
+
+    if(res.ok){
+        kst("✅ FULLY ONLINE","ok");
+        add(`✅ <b>SUCCESS!</b> Nakakonekta na gamit ang model na <b>${res.model}</b>. Wala nang "not supported" error, Sir. Magtanong ka na!`,"jar");
+        hud("ONLINE");
+    } else {
+        kst("❌ ALL FAILED","bd");
+        add(`<b class="err">Error:</b> ${res.error}<br><small>Karaniwang solusyon: baguhin ang API key o i-check ang internet.</small>`,"jar");
+        hud("FAILED");
     }
 };
 
+/* ---------- CHAT HELPERS ---------- */
 function add(txt,who="you"){
     const d = document.createElement("div");
     d.className = "msg "+who;
@@ -196,7 +221,7 @@ function add(txt,who="you"){
 function dots(show){
     if(!show){ const t=document.getElementById("dots"); if(t) t.remove(); return; }
     const d = document.createElement("div"); d.className = "msg jar"; d.id = "dots";
-    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">NAG-IISIP <span class="dots"><span></span><span></span><span></span></span></div>`;
+    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">THINKING <span class="dots"><span></span><span></span><span></span></span></div>`;
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
 }
 function talk(t){
@@ -206,47 +231,27 @@ function talk(t){
 }
 function reply(t){ add(t,"jar"); hud("READY"); talk(t); }
 
-function bi(q){
-    q = q.toLowerCase().trim();
-    if(/^(hi|hello|musta|kumusta)/.test(q) || q.length<=3) return `Good ${$("gr").textContent.toLowerCase()}, Sir.`;
-    if(q.includes("time")) return `It is ${new Date().toLocaleTimeString("en-PH")}, Sir.`;
-    if(q.includes("who are you")) return "I am JARVIS v6.0 — powered by Groq Llama 3, built by CyberJayd, Sir.";
-    if(q.includes("thank")||q.includes("salamat")) return "Walang anuman, Sir. Nandito lang ako para sa'yo.";
-    return null;
-}
-
-async function ask(text){
-    if(KEY.length<20) return null;
-    try{
-        const r = await fetch(URL,{
-            method:"POST",
-            headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
-            body: JSON.stringify({
-                model:MODEL,
-                messages:[{role:"system",content:"Ikaw ay JARVIS mula sa Iron Man. Laging tawagin ang user na 'Sir'. Maging magalang, tumpak, at matulungin. Gumamit ng Tagalog o Taglish kung Tagalog ang tanong."},{role:"user",content:text}],
-                max_tokens:1024
-            })
-        });
-        const d = await r.json();
-        return d?.choices?.[0]?.message?.content?.trim();
-    }catch(e){ return null; }
-}
-
+/* ---------- MAIN CHAT ---------- */
 async function run(){
     const t = q.value.trim(); if(!t) return;
     add(t,"you"); q.value="";
-    const f = bi(t); if(f) return reply(f);
     dots(true);
-    const a = await ask(t);
+
+    const res = await groqFetch([
+        {role:"system",content:"You are JARVIS from Iron Man. ALWAYS call the user 'Sir'. Be calm, precise, witty, helpful. Use Tagalog/Taglish if the user speaks Tagalog or Bisaya. Keep answers clear."},
+        {role:"user",content:t}
+    ]);
+
     dots(false);
-    if(!a) return reply("Walang sagot, Sir. I-check ang key o internet.");
-    reply(a);
+    if(!res.ok) return reply(`Pasensya na Sir, pansamantalang hindi makasagot: ${res.error}`);
+    reply(res.text);
 }
 
 send.onclick = run;
 q.onkeydown = e => e.key==="Enter" && run();
 clr.onclick = () => { chat.innerHTML=`<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat cleared, Sir.</div></div>`; };
 
+/* ---------- VOICE INPUT ---------- */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 if(SR){
     const rec = new SR(); rec.lang="en-US";
