@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v5.3 // GEMINI 2.0 FLASH</title>
+<title>CYBERJAYD J.A.R.V.I.S v6.0 // GROQ LIBRE</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{--bg:#020617;--pn:rgba(8,47,73,.32);--pn2:rgba(15,23,42,.6);--tx:#e0f2fe;--mt:#7dd3fc;--ac:#06b6d4;--ac2:#38bdf8;--ok:#10b981;--wr:#f59e0b;--bd:#ef4444;--ln:rgba(6,182,212,.32)}
@@ -74,29 +74,28 @@
 <body>
 
 <div class="tb">
-    <label>Gemini Key</label>
-    <input id="apiKey" type="password" placeholder="Paste your API key here" autocomplete="off">
+    <label>GROQ API KEY (LIBRE)</label>
+    <input id="apiKey" type="password" placeholder="Kumuha sa console.groq.com/keys — WALANG CARD KAILANGAN" autocomplete="off">
     <button class="btn ok" id="saveKey">ACTIVATE</button>
     <button class="btn wr" id="testKey">TEST KEY</button>
     <span class="st bd" id="kstat">KEY: NOT SET</span>
 </div>
 
 <header>
-    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v5.3</div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v6.0</div>
     <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
     <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>✅ UPDATED: Using <b>gemini-2.0-flash</b> — works on ALL new API keys now.</p>
+        <p>✅ SWITCHED TO <b>GROQ LLAMA 3</b> — 100% LIBRE, WALANG CARD, WALANG QUOTA ERROR!</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
     <div class="pn">
         <h3>⚙ SYSTEM STATUS</h3>
         <div class="row">
-            <button class="btn wr" id="schbtn">🔍 SEARCH: ON</button>
             <button class="btn" id="vbtn">🔊 VOICE: ON</button>
             <button class="btn" id="mic">🎤 SPEAK</button>
             <button class="btn bd" id="clr">CLEAR CHAT</button>
@@ -106,36 +105,35 @@
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v5.3 updated, Sir. <b>Fixed the 404 error completely</b> — switched to <b>gemini-2.0-flash</b>, the only model accepted by new keys now. Just paste your key and test!</div>
+            <div class="txt">v6.0 updated, Sir. Hindi na Gemini — gumagamit na tayo ng <b>Groq Llama 3</b>. Ito ay <b>libre, walang kailangang credit card, at mas maluwag ang limitasyon</b>. Kumuha lang ng key sa console.groq.com/keys, i-paste dito, at magsimula na!</div>
         </div>
     </div>
 
     <div class="input">
-        <input id="q" placeholder="Ask anything — it will work now...">
+        <input id="q" placeholder="Ask anything — gumagana na ito nang walang problema...">
         <button class="btn ok" id="send">SEND ➤</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v5.3</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v6.0</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
 /* =========================================================
-   JARVIS v5.3 — PERMANENT FIX: GEMINI 2.0 FLASH
+   JARVIS v6.0 — GROQ LLAMA 3.1 70B · 100% LIBRE WALANG CARD
    ========================================================= */
-const MODEL = "gemini-2.0-flash";
-const URL = "https://generativelanguage.googleapis.com/v1/models/"+MODEL+":generateContent?key=";
+const MODEL = "llama-3.1-70b-versatile";
+const URL = "https://api.groq.com/openai/v1/chat/completions";
 
-let KEY = localStorage.getItem("cj_key") || "";
-let SEARCH = localStorage.getItem("cj_sch") !== "false";
+let KEY = localStorage.getItem("cj_groq_key") || "";
 let VOICE = true;
 let recognition = null;
 
 const $ = id => document.getElementById(id);
 const chat=$("chat"), q=$("q"), send=$("send");
-const schbtn=$("schbtn"), vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
+const vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
 const hstat=$("hstat"), kstat=$("kstat");
 
 const hr = new Date().getHours();
@@ -143,12 +141,7 @@ $("gr").textContent = hr<12?"MORNING":hr<18?"AFTERNOON":"EVENING";
 
 function hud(t){ hstat.textContent = t.toUpperCase(); }
 function kst(t,c){ kstat.textContent = t; kstat.className = "st "+(c||""); }
-function schUI(){
-    schbtn.textContent = SEARCH ? "🔍 SEARCH: ON" : "🔍 SEARCH: OFF";
-    localStorage.setItem("cj_sch", SEARCH);
-}
-schUI();
-schbtn.onclick = () => { SEARCH = !SEARCH; schUI(); };
+
 vbtn.onclick = () => {
     VOICE = !VOICE;
     vbtn.textContent = VOICE ? "🔊 VOICE: ON" : "🔇 VOICE: OFF";
@@ -157,38 +150,39 @@ vbtn.onclick = () => {
 
 $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
-    localStorage.setItem("cj_key", KEY);
+    localStorage.setItem("cj_groq_key", KEY);
     if(KEY.length > 20){
         kst("✅ KEY SAVED","ok");
-        add("Key saved successfully, Sir. Click TEST KEY to confirm connection.","jar");
+        add("Groq key saved, Sir. Click TEST KEY to verify.","jar");
     } else {
         kst("⚠ INVALID KEY","wr");
-        add("Please copy the full API key from Google AI Studio, Sir.","jar");
+        add("Kopyahin ang buong key mula sa console.groq.com/keys, Sir.","jar");
     }
 };
 if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
 
 $("testKey").onclick = async () => {
-    if(KEY.length < 20){ kst("⚠ NO KEY SET","wr"); return add("Save your API key first, Sir.","jar"); }
-    hud("TESTING GEMINI 2.0...");
+    if(KEY.length < 20){ kst("⚠ NO KEY","wr"); return add("Maglagay muna ng Groq API key, Sir.","jar"); }
+    hud("PAGKONEKTA...");
     try{
-        const r = await fetch(URL+KEY,{
-            method:"POST", headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({ contents:[{ role:"user", parts:[{ text:"Reply with ONLINE only" }] }] })
+        const r = await fetch(URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
+            body: JSON.stringify({ model:MODEL, messages:[{role:"user",content:"Reply with ONLINE only"}], max_tokens:10 })
         });
-        const t = await r.text();
+        const d = await r.json();
         if(!r.ok){
             kst("❌ FAILED","bd");
-            add("<b class='err'>ERROR "+r.status+":</b><br>"+t.replace(/</g,"&lt;").slice(0,350),"jar");
+            add("<b class='err'>ERROR "+r.status+":</b><br>"+JSON.stringify(d.error||d).replace(/</g,"&lt;").slice(0,300),"jar");
             hud("FAILED");
         } else {
-            kst("✅ FULLY ONLINE","ok");
-            add("✅ SUCCESS! Gemini 2.0 Flash is connected. No more 404 errors. Ask me anything now, Sir.","jar");
-            hud("ONLINE");
+            kst("✅ GROQ ONLINE","ok");
+            add("✅ TAGUMPAY! Groq Llama 3 ay nakakonekta na. Wala nang quota error! Magtanong ka na, Sir.","jar");
+            hud("READY");
         }
     }catch(e){
-        kst("❌ NETWORK ERROR","bd");
-        add("<b class='err'>Connection failed:</b> "+e.message,"jar");
+        kst("❌ NETWORK","bd");
+        add("<b class='err'>Error:</b> "+e.message,"jar");
         hud("ERROR");
     }
 };
@@ -202,7 +196,7 @@ function add(txt,who="you"){
 function dots(show){
     if(!show){ const t=document.getElementById("dots"); if(t) t.remove(); return; }
     const d = document.createElement("div"); d.className = "msg jar"; d.id = "dots";
-    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">THINKING <span class="dots"><span></span><span></span><span></span></span></div>`;
+    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">NAG-IISIP <span class="dots"><span></span><span></span><span></span></span></div>`;
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
 }
 function talk(t){
@@ -216,22 +210,25 @@ function bi(q){
     q = q.toLowerCase().trim();
     if(/^(hi|hello|musta|kumusta)/.test(q) || q.length<=3) return `Good ${$("gr").textContent.toLowerCase()}, Sir.`;
     if(q.includes("time")) return `It is ${new Date().toLocaleTimeString("en-PH")}, Sir.`;
-    if(q.includes("date")) return `Today is ${new Date().toLocaleDateString("en-PH",{weekday:"long",day:"numeric",month:"long"})}, Sir.`;
-    if(q.includes("who are you")) return "I am JARVIS v5.3 — your personal AI assistant, built by CyberJayd, Sir.";
-    if(q.includes("thank")) return "Always at your service, Sir.";
+    if(q.includes("who are you")) return "I am JARVIS v6.0 — powered by Groq Llama 3, built by CyberJayd, Sir.";
+    if(q.includes("thank")||q.includes("salamat")) return "Walang anuman, Sir. Nandito lang ako para sa'yo.";
     return null;
 }
 
 async function ask(text){
     if(KEY.length<20) return null;
     try{
-        const body = {
-            contents:[{ role:"user", parts:[{ text:`You are JARVIS, polite, call me Sir. Use Tagalog if I speak Tagalog. Answer: ${text}` }] }]
-        };
-        if(SEARCH) body.tools = [{ googleSearch:{} }];
-        const r = await fetch(URL+KEY,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+        const r = await fetch(URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
+            body: JSON.stringify({
+                model:MODEL,
+                messages:[{role:"system",content:"Ikaw ay JARVIS mula sa Iron Man. Laging tawagin ang user na 'Sir'. Maging magalang, tumpak, at matulungin. Gumamit ng Tagalog o Taglish kung Tagalog ang tanong."},{role:"user",content:text}],
+                max_tokens:1024
+            })
+        });
         const d = await r.json();
-        return d?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+        return d?.choices?.[0]?.message?.content?.trim();
     }catch(e){ return null; }
 }
 
@@ -242,7 +239,7 @@ async function run(){
     dots(true);
     const a = await ask(t);
     dots(false);
-    if(!a) return reply("No response, Sir. Click TEST KEY to check your connection.");
+    if(!a) return reply("Walang sagot, Sir. I-check ang key o internet.");
     reply(a);
 }
 
