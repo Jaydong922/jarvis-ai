@@ -3,306 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v4.0 // 100% WORKING</title>
+<title>CYBERJAYD J.A.R.V.I.S v5.1 // GEMINI FIRST</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-    :root{
-        --bg:#020617; --panel:rgba(8,47,73,0.35); --panel2:rgba(30,41,59,0.5);
-        --text:#e0f2fe; --muted:#7dd3fc; --accent:#06b6d4; --accent2:#22d3ee;
-        --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --line:rgba(6,182,212,0.35);
-    }
+    :root{--bg:#020617;--pn:rgba(8,47,73,.32);--pn2:rgba(15,23,42,.6);--tx:#e0f2fe;--mt:#7dd3fc;--ac:#06b6d4;--ac2:#38bdf8;--ok:#10b981;--wr:#f59e0b;--bd:#ef4444;--ln:rgba(6,182,212,.32)}
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
-    body::before{
-        content:"";position:fixed;inset:0;z-index:-2;
-        background:
-            radial-gradient(ellipse at 20% 0%,rgba(6,182,212,0.25),transparent 55%),
-            radial-gradient(ellipse at 80% 100%,rgba(59,130,246,0.18),transparent 55%),
-            linear-gradient(#020617,#020617);
-    }
-    body::after{
-        content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.12;
-        background-image:linear-gradient(rgba(6,182,212,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.5) 1px,transparent 1px);
-        background-size:40px 40px;
-    }
-    .topbar{
-        display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-        padding:12px 5%;border-bottom:1px solid var(--line);
-        background:rgba(2,6,23,0.85);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50
-    }
-    .topbar label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
-    .topbar input{
-        flex:1;min-width:220px;padding:8px 12px;background:rgba(15,23,42,0.8);
-        border:1px solid var(--line);border-radius:4px;color:var(--text);
-        font-family:'Rajdhani',sans-serif;font-size:14px;outline:none
-    }
-    .topbar input:focus{border-color:var(--accent);box-shadow:0 0 12px rgba(6,182,212,0.4)}
-    .btn{
-        padding:8px 14px;border:1px solid var(--accent);background:rgba(6,182,212,0.1);
-        color:var(--accent);font-family:'Orbitron',sans-serif;font-size:11px;
-        letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;
-        transition:.2s
-    }
-    .btn:hover{background:var(--accent);color:#020617;box-shadow:0 0 18px rgba(6,182,212,0.6)}
-    .btn.bad{border-color:var(--bad);background:rgba(239,68,68,0.1);color:var(--bad)}
-    .btn.bad:hover{background:var(--bad);color:#fff;box-shadow:0 0 18px rgba(239,68,68,0.5)}
-    .btn.ok{border-color:var(--ok);background:rgba(16,185,129,0.1);color:var(--ok)}
-    .btn.ok:hover{background:var(--ok);color:#020617;box-shadow:0 0 18px rgba(16,185,129,0.5)}
-    .btn.warn{border-color:var(--warn);background:rgba(245,158,11,0.1);color:var(--warn)}
-    .btn.warn:hover{background:var(--warn);color:#020617;box-shadow:0 0 18px rgba(245,158,11,0.5)}
+    html,body{min-height:100%;background:var(--bg);color:var(--tx);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 20% 0%,rgba(6,182,212,.28),transparent 55%),radial-gradient(ellipse at 80% 100%,rgba(59,130,246,.2),transparent 55%),#020617}
+    body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.1;background-image:linear-gradient(rgba(6,182,212,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,.5) 1px,transparent 1px);background-size:40px 40px}
+    .tb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 5%;border-bottom:1px solid var(--ln);background:rgba(2,6,23,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50}
+    .tb label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:var(--ac);text-transform:uppercase}
+    .tb input{flex:1;min-width:220px;padding:8px 12px;background:rgba(15,23,42,.85);border:1px solid var(--ln);border-radius:4px;color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:14px;outline:none}
+    .tb input:focus{border-color:var(--ac);box-shadow:0 0 12px rgba(6,182,212,.4)}
+    .btn{padding:8px 14px;border:1px solid var(--ac);background:rgba(6,182,212,.1);color:var(--ac);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s}
+    .btn:hover{background:var(--ac);color:#020617;box-shadow:0 0 18px rgba(6,182,212,.6)}
+    .btn.ok{border-color:var(--ok);background:rgba(16,185,129,.1);color:var(--ok)}
+    .btn.ok:hover{background:var(--ok);color:#020617;box-shadow:0 0 18px rgba(16,185,129,.5)}
+    .btn.bd{border-color:var(--bd);background:rgba(239,68,68,.1);color:var(--bd)}
+    .btn.bd:hover{background:var(--bd);color:#fff;box-shadow:0 0 18px rgba(239,68,68,.5)}
+    .btn.wr{border-color:var(--wr);background:rgba(245,158,11,.1);color:var(--wr)}
+    .btn.wr:hover{background:var(--wr);color:#020617;box-shadow:0 0 18px rgba(245,158,11,.5)}
     .btn:disabled{opacity:.4;cursor:not-allowed}
-    .stat{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;color:var(--muted)}
-    .stat.ok{color:var(--ok)}.stat.bad{color:var(--bad)}.stat.warn{color:var(--warn)}
-
-    header{
-        padding:24px 5% 12px;border-bottom:1px solid var(--line);
-        display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px
-    }
-    .brand{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}
-    .brand b{color:var(--accent);text-shadow:0 0 12px var(--accent)}
-    .brand i{color:var(--accent2);font-style:normal}
-    .hud{
-        display:flex;align-items:center;gap:10px;font-family:'Orbitron',sans-serif;
-        font-size:11px;letter-spacing:1.5px;color:var(--muted)
-    }
-    .dot{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 1.6s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-    main{max-width:1080px;margin:0 auto;padding:22px 5% 60px}
-    .greet{text-align:center;margin-bottom:18px}
-    .greet h1{
-        font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:1px;
-        font-size:clamp(28px,6vw,54px);line-height:1.1
-    }
-    .greet h1 span{
-        background:linear-gradient(120deg,var(--accent),#60a5fa,var(--accent2));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
-        filter:drop-shadow(0 0 14px rgba(6,182,212,0.45))
-    }
-    .greet p{color:var(--muted);margin-top:6px;letter-spacing:.5px}
-
-    .eq{
-        height:64px;display:flex;align-items:center;justify-content:center;gap:5px;margin:10px 0 18px
-    }
-    .eq span{
-        width:5px;border-radius:3px;background:linear-gradient(to top,var(--accent),#60a5fa);
-        box-shadow:0 0 8px var(--accent);animation:eq 1s ease-in-out infinite
-    }
+    .st{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;color:var(--mt)}
+    .st.ok{color:var(--ok)}.st.bd{color:var(--bd)}.st.wr{color:var(--wr)}
+    header{padding:22px 5% 10px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .br{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}
+    .br b{color:var(--ac);text-shadow:0 0 12px var(--ac)}
+    .br i{color:var(--ac2);font-style:normal}
+    .hd{display:flex;align-items:center;gap:10px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--mt)}
+    .dt{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pl 1.6s infinite}
+    @keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+    main{max-width:1080px;margin:0 auto;padding:20px 5% 60px}
+    .gr{text-align:center;margin-bottom:14px}
+    .gr h1{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:1px;font-size:clamp(28px,6vw,54px);line-height:1.1}
+    .gr h1 span{background:linear-gradient(120deg,var(--ac),#60a5fa,var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(6,182,212,.45))}
+    .gr p{color:var(--mt);margin-top:6px;letter-spacing:.5px;font-size:14.5px}
+    .eq{height:60px;display:flex;align-items:center;justify-content:center;gap:5px;margin:6px 0 16px}
+    .eq span{width:5px;border-radius:3px;background:linear-gradient(to top,var(--ac),#60a5fa);box-shadow:0 0 8px var(--ac);animation:eq 1s ease-in-out infinite}
     .eq span:nth-child(1){height:22px;animation-delay:0s}
-    .eq span:nth-child(2){height:38px;animation-delay:.1s}
-    .eq span:nth-child(3){height:54px;animation-delay:.2s}
-    .eq span:nth-child(4){height:64px;animation-delay:.3s}
-    .eq span:nth-child(5){height:54px;animation-delay:.4s}
-    .eq span:nth-child(6){height:38px;animation-delay:.5s}
+    .eq span:nth-child(2){height:36px;animation-delay:.1s}
+    .eq span:nth-child(3){height:50px;animation-delay:.2s}
+    .eq span:nth-child(4){height:60px;animation-delay:.3s}
+    .eq span:nth-child(5){height:50px;animation-delay:.4s}
+    .eq span:nth-child(6){height:36px;animation-delay:.5s}
     .eq span:nth-child(7){height:22px;animation-delay:.6s}
     @keyframes eq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-
-    .panel{
-        background:var(--panel);border:1px solid var(--line);border-radius:8px;
-        padding:16px;margin-bottom:16px;backdrop-filter:blur(8px);
-        box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03),0 8px 30px rgba(2,6,23,0.6)
-    }
-    .panel h3{
-        font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:2px;
-        color:var(--accent);margin-bottom:10px;text-transform:uppercase
-    }
-    .note{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
-    .note b{color:var(--ok)}
-    .models{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}
-    .m{
-        padding:10px 12px;border:1px solid var(--line);background:rgba(15,23,42,0.7);
-        border-radius:5px;cursor:pointer;transition:.2s;font-size:13px
-    }
-    .m:hover{border-color:var(--accent)}
-    .m.active{border-color:var(--ok);background:rgba(16,185,129,0.12);color:#bbf7d0}
-    .m b{font-family:'Orbitron',sans-serif;letter-spacing:1px}
-    .m small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-    .m.adv small{color:var(--warn)}
-
-    .bar{display:none;margin:10px 0 4px}
-    .bar.show{display:block}
-    .bar .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px}
-    .track{width:100%;height:10px;background:rgba(15,23,42,0.8);border:1px solid var(--line);border-radius:999px;overflow:hidden}
-    .fill{
-        height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#60a5fa,var(--accent2));
-        border-radius:999px;box-shadow:0 0 12px var(--accent);transition:width .25s linear
-    }
-
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-
-    .manual{
-        margin-top:12px;padding:12px;border-left:3px solid var(--accent);
-        background:rgba(6,182,212,0.06);border-radius:0 5px 5px 0;font-size:12.5px;color:var(--muted);line-height:1.7
-    }
-    .manual h4{color:var(--accent);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:6px;font-size:12px}
-    .manual ol{padding-left:18px}
-    .manual code{background:rgba(0,0,0,0.4);padding:1px 6px;border-radius:3px;color:var(--accent);font-size:11px}
-
-    .chat{
-        height:360px;overflow-y:auto;padding:14px;background:var(--panel2);
-        border:1px solid var(--line);border-radius:8px;margin-bottom:12px
-    }
+    .pn{background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:14px 16px;margin-bottom:14px;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 8px 30px rgba(2,6,23,.6)}
+    .pn h3{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:2px;color:var(--ac);margin-bottom:8px;text-transform:uppercase}
+    .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:4px}
+    .chat{height:360px;overflow-y:auto;padding:14px;background:var(--pn2);border:1px solid var(--ln);border-radius:8px;margin-bottom:12px}
     .msg{margin-bottom:12px;padding:10px 12px;border-radius:5px;max-width:88%;animation:in .3s ease}
     @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-    .msg.you{margin-left:auto;background:rgba(6,182,212,0.12);border-right:3px solid var(--accent)}
-    .msg.jar{margin-right:auto;background:rgba(99,102,241,0.12);border-left:3px solid #818cf8}
+    .msg.you{margin-left:auto;background:rgba(6,182,212,.12);border-right:3px solid var(--ac)}
+    .msg.jar{margin-right:auto;background:rgba(99,102,241,.12);border-left:3px solid #818cf8}
     .tag{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1.5px;margin-bottom:3px;text-transform:uppercase}
-    .msg.you .tag{color:var(--accent)}
-    .msg.jar .tag{color:#a5b4fc}
+    .msg.you .tag{color:var(--ac)}.msg.jar .tag{color:#a5b4fc}
     .txt{font-size:14.5px;line-height:1.6}
+    .txt.err{color:#fca5a5}
     .dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:#a5b4fc;margin:0 2px;animation:dot 1s infinite}
     .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
     @keyframes dot{0%,60%,100%{transform:none}30%{transform:translateY(-5px)}}
-
     .input{display:flex;gap:8px}
-    .input input{
-        flex:1;padding:12px 14px;background:rgba(15,23,42,0.85);border:1px solid var(--line);
-        border-radius:5px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;outline:none
-    }
-    .input input:focus{border-color:var(--accent);box-shadow:0 0 12px rgba(6,182,212,0.35)}
-
-    footer{
-        text-align:center;padding:20px 5%;border-top:1px solid var(--line);
-        color:var(--muted);font-size:12px;letter-spacing:1px
-    }
-    footer b{color:var(--accent);font-family:'Orbitron',sans-serif;letter-spacing:1.5px}
-
-    @media (max-width:600px){.chat{height:320px}}
+    .input input{flex:1;padding:12px 14px;background:rgba(15,23,42,.85);border:1px solid var(--ln);border-radius:5px;color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:15px;outline:none}
+    .input input:focus{border-color:var(--ac);box-shadow:0 0 12px rgba(6,182,212,.35)}
+    footer{text-align:center;padding:18px 5%;border-top:1px solid var(--ln);color:var(--mt);font-size:12px;letter-spacing:1px}
+    footer b{color:var(--ac);font-family:'Orbitron',sans-serif;letter-spacing:1.5px}
+    @media (max-width:600px){.chat{height:330px}}
 </style>
-<script type="module">
-import * as webllm from "https://esm.sh/@mlc-ai/web-llm@0.2.70";
-window.WEBLLM = webllm;
-</script>
 </head>
 <body>
 
-<div class="topbar">
+<div class="tb">
     <label>Gemini Key</label>
-    <input id="apiKey" type="password" placeholder="Optional — cloud AI + live web search fallback" autocomplete="off">
-    <button class="btn" id="saveKey">ACTIVATE</button>
-    <span class="stat bad" id="kstat">AI: STANDBY</span>
+    <input id="apiKey" type="password" placeholder="Get key from aistudio.google.com — PASTE HERE" autocomplete="off">
+    <button class="btn ok" id="saveKey">ACTIVATE</button>
+    <button class="btn wr" id="testKey">TEST KEY</button>
+    <span class="st bd" id="kstat">KEY: NOT SET</span>
 </div>
 
 <header>
-    <div class="brand"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v4.0</div>
-    <div class="hud"><div class="dot"></div><span id="hstat">SYSTEM READY</span></div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v5.1</div>
+    <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
-    <div class="greet">
+    <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>Select a brain. Install once inside the browser. Answers anything — with or without internet.</p>
+        <p>Google Gemini 2.5 Flash + Live Search. Activate your key once — answers anything instantly.</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
-    <div class="panel">
-        <h3>⚙ AI CORE INSTALLER</h3>
-        <div class="note">
-            <b>NOTE:</b> Models download directly into the browser's internal AI cache only.
-            They will <b>never appear in Downloads, File Manager, or Gallery</b>.
-            They exist solely to power J.A.R.V.I.S on this page.
-        </div>
-
-        <div class="models" id="models">
-            <div class="m active" data-id="TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC">
-                <b>⚡ TINYLLAMA 1.1B</b><small>~600 MB · 4GB+ RAM · RECOMMENDED · WORKS ON ALL PHONES</small>
-            </div>
-            <div class="m" data-id="SmolLM2-1.7B-Instruct-q4f16_1-MLC">
-                <b>🛡 SMOLMLM2 1.7B</b><small>~900 MB · 6GB+ RAM · SMARTER, STILL FAST</small>
-            </div>
-            <div class="m adv" data-id="Llama-3.2-3B-Instruct-q4f16_1-MLC">
-                <b>🧠 LLAMA 3.2 3B</b><small>~1.6 GB · 8GB+ RAM · HIGH-END DEVICES ONLY</small>
-            </div>
-        </div>
-
-        <div class="bar" id="bar">
-            <div class="meta"><span id="btext">PREPARING...</span><span id="bpct">0%</span></div>
-            <div class="track"><div class="fill" id="bfill"></div></div>
-        </div>
-
+    <div class="pn">
+        <h3>⚙ SYSTEM STATUS</h3>
         <div class="row">
-            <button class="btn ok" id="go">⬇ INSTALL / LOAD SELECTED</button>
-            <button class="btn bad" id="wipe">🗑 CLEAR ALL LOCAL AI</button>
-            <button class="btn warn" id="schbtn">🔍 SEARCH: ON</button>
+            <button class="btn wr" id="schbtn">🔍 SEARCH: ON</button>
             <button class="btn" id="vbtn">🔊 VOICE: ON</button>
             <button class="btn" id="mic">🎤 SPEAK</button>
-            <button class="btn bad" id="clr">CLEAR CHAT</button>
-        </div>
-
-        <div class="manual">
-            <h4>📖 QUICK START</h4>
-            <ol>
-                <li>Pick a brain above — start with <code>TinyLlama 1.1B</code> for guaranteed success.</li>
-                <li>Tap <b>INSTALL / LOAD SELECTED</b>. Keep internet ON and this tab open.</li>
-                <li>Wait for the progress bar to reach <b>100%</b>. Do not refresh.</li>
-                <li>Once loaded: type or speak anything — JARVIS answers offline.</li>
-                <li>No internet? No problem. Or paste a <b>Gemini Key</b> above for cloud AI + live Google search.</li>
-            </ol>
+            <button class="btn bd" id="clr">CLEAR CHAT</button>
         </div>
     </div>
 
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v4.0 online, Sir. Start with <b>TinyLlama 1.1B</b> above — it installs fast and runs perfectly on any phone. Or activate your Gemini key for instant cloud access.</div>
+            <div class="txt">v5.1 online, Sir. Paste your Gemini API key above, click <b>ACTIVATE</b>, then <b>TEST KEY</b> to confirm. After that — ask me literally anything.</div>
         </div>
     </div>
 
     <div class="input">
-        <input id="q" placeholder="Ask anything — code, school, stories, philosophy...">
+        <input id="q" placeholder="Ask anything — math, code, school, news, stories, anything...">
         <button class="btn ok" id="send">SEND ➤</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v4.0</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v5.1</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
-const CLOUD = "gemini-2.5-flash";
-const GAPI = "https://generativelanguage.googleapis.com/v1beta/models/"+CLOUD+":generateContent?key=";
+/* =========================================================
+   JARVIS v5.1 — GEMINI FIRST, ROCK SOLID, SHOWS REAL ERRORS
+   ========================================================= */
+const MODEL = "gemini-2.5-flash";
+const URL = "https://generativelanguage.googleapis.com/v1beta/models/"+MODEL+":generateContent?key=";
 
-const MODEL_ORDER = [
-    "TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC",
-    "SmolLM2-1.7B-Instruct-q4f16_1-MLC",
-    "Llama-3.2-3B-Instruct-q4f16_1-MLC"
-];
-
-let SELECTED = MODEL_ORDER[0];
 let KEY = localStorage.getItem("cj_key") || "";
 let SEARCH = localStorage.getItem("cj_sch") !== "false";
 let VOICE = true;
-let engine = null, loaded = false, busy = false, loadedModel = "";
 let recognition = null;
 
 const $ = id => document.getElementById(id);
-const chat = $("chat"), q = $("q"), send = $("send");
-const go = $("go"), wipe = $("wipe"), schbtn = $("schbtn"), vbtn = $("vbtn"), mic = $("mic"), clr = $("clr");
-const hstat = $("hstat"), kstat = $("kstat"), btext = $("btext"), bpct = $("bpct"), bfill = $("bfill"), bar = $("bar");
+const chat=$("chat"), q=$("q"), send=$("send");
+const schbtn=$("schbtn"), vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
+const hstat=$("hstat"), kstat=$("kstat");
 
-const h = new Date().getHours();
-$("gr").textContent = h<12?"MORNING":h<18?"AFTERNOON":"EVENING";
+const hr = new Date().getHours();
+$("gr").textContent = hr<12?"MORNING":hr<18?"AFTERNOON":"EVENING";
 
 /* ---------- UI ---------- */
-document.querySelectorAll(".m").forEach(el=>{
-    el.onclick = () => {
-        if(busy) return;
-        document.querySelectorAll(".m").forEach(x=>x.classList.remove("active"));
-        el.classList.add("active");
-        SELECTED = el.dataset.id;
-    };
-});
-
 function hud(t){ hstat.textContent = t.toUpperCase(); }
-function kst(t,c){ kstat.textContent = t; kstat.className = "stat "+(c||""); }
-function showBar(s){ bar.classList.toggle("show", !!s); }
-function setBar(pct, txt){
-    pct = Math.max(0, Math.min(100, Math.round(pct)));
-    bfill.style.width = pct+"%";
-    bpct.textContent = pct+"%";
-    if(txt) btext.textContent = txt.toUpperCase();
-}
+function kst(t,c){ kstat.textContent = t; kstat.className = "st "+(c||""); }
 function schUI(){
     schbtn.textContent = SEARCH ? "🔍 SEARCH: ON" : "🔍 SEARCH: OFF";
     localStorage.setItem("cj_sch", SEARCH);
@@ -314,17 +155,46 @@ vbtn.onclick = () => {
     vbtn.textContent = VOICE ? "🔊 VOICE: ON" : "🔇 VOICE: OFF";
     if(!VOICE && "speechSynthesis" in window) speechSynthesis.cancel();
 };
+
 $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
     localStorage.setItem("cj_key", KEY);
-    if(KEY.length>20){
-        kst(loaded?"✅ LOCAL + CLOUD":"✅ CLOUD ACTIVE","ok");
-        add("Gemini cloud layer activated. Live search enabled, Sir.","jar");
+    if(KEY.length > 20){
+        kst("✅ KEY SAVED","ok");
+        add("Gemini key saved, Sir. Click TEST KEY to verify connection, then ask me anything.","jar");
     } else {
-        kst(loaded?"✅ LOCAL ONLY":"AI: STANDBY", loaded?"ok":"bad");
+        kst("⚠ KEY TOO SHORT","wr");
+        add("That doesn't look like a valid key, Sir. Please copy the full key from aistudio.google.com.","jar");
     }
 };
-if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ CLOUD READY","ok"); }
+if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
+
+/* ---------- TEST CONNECTION (SHOWS REAL ERROR) ---------- */
+$("testKey").onclick = async () => {
+    if(KEY.length < 20){ kst("⚠ NO VALID KEY","wr"); add("Please save a valid Gemini key first, Sir.","jar"); return; }
+    hud("TESTING CONNECTION...");
+    try{
+        const r = await fetch(URL+KEY,{
+            method:"POST", headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({ contents:[{ role:"user", parts:[{ text:"reply with the single word: ONLINE" }] }] })
+        });
+        const t = await r.text();
+        if(!r.ok){
+            kst("❌ KEY FAILED","bd");
+            add("<b class='err'>KEY ERROR "+r.status+":</b><br>"+t.replace(/</g,"&lt;").slice(0,500),"jar");
+            add("Most common fixes: 1) Enable billing / free tier in Google AI Studio, 2) Use the correct API key, 3) Wait 2–5 mins after creating a new key.","jar");
+            hud("KEY FAILED");
+        } else {
+            kst("✅ GEMINI ONLINE","ok");
+            add("✅ Connection successful — Gemini is fully online and responding. Ask me anything now, Sir.","jar");
+            hud("ONLINE");
+        }
+    }catch(e){
+        kst("❌ NETWORK ERROR","bd");
+        add("<b class='err'>Network error:</b> "+e.message,"jar");
+        hud("ERROR");
+    }
+};
 
 /* ---------- CHAT HELPERS ---------- */
 function add(txt,who="you"){
@@ -334,7 +204,7 @@ function add(txt,who="you"){
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
 }
 function dots(show,label="THINKING"){
-    if(!show){ const t=$("#dots"); if(t) t.remove(); return; }
+    if(!show){ const t=document.getElementById("dots"); if(t) t.remove(); return; }
     const d = document.createElement("div");
     d.className = "msg jar"; d.id = "dots";
     d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">${label} <span class="dots"><span></span><span></span><span></span></span></div>`;
@@ -349,148 +219,82 @@ function talk(t){
 }
 function reply(t){ add(t,"jar"); hud("READY"); talk(t); }
 
-/* ---------- FAST COMMANDS ---------- */
-function fast(q){
+/* ---------- BUILT-IN COMMANDS ---------- */
+function bi(q){
     q = q.toLowerCase().trim();
     if(/^(hi|hello|hey|yo|musta|kumusta|good (morning|afternoon|evening))/.test(q) || q.length<=3)
-        return `Good ${$("gr").textContent.toLowerCase()}, Sir. ${loaded?"My "+loadedModel+" brain is online — ask anything.":"Install TinyLlama above or activate Gemini and I'm all yours."}`;
+        return `Good ${$("gr").textContent.toLowerCase()}, Sir. Gemini online — ask me anything.`;
     if(q.includes("time")||q.includes("oras")) return `It is ${new Date().toLocaleTimeString("en-PH")}, Sir.`;
     if(q.includes("date")||q.includes("petsa")||q.includes("what day"))
         return `Today is ${new Date().toLocaleDateString("en-PH",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}, Sir.`;
     if(q.includes("your name")||q.includes("who are you")||q.includes("sino ka"))
-        return "I am J.A.R.V.I.S v4.0 — personal AI of CyberJayd. Built 100% on Android, Sir.";
+        return "I am J.A.R.V.I.S v5.1 — personal AI of CyberJayd. Built 100% on Android, Sir.";
     if(q.includes("who created")||q.includes("who built")||q.includes("sino gumawa"))
         return "Jayd F. Repoberbio — CyberJayd — from Baybay City, Leyte. Built this entire system on a phone using Termux, Sir.";
+    if(q.includes("open portfolio")){ setTimeout(()=>open("https://jaydong922.github.io","_blank"),250); return "Opening your portfolio, Sir."; }
+    if(q.includes("open github")){ setTimeout(()=>open("https://github.com/Jaydong922","_blank"),250); return "Opening your GitHub, Sir."; }
+    if(q.includes("thank")||q.includes("salamat")) return "Always at your service, Sir.";
     return null;
 }
 
-/* ---------- LOCAL AI ---------- */
-async function tryLoad(modelId){
-    busy = true; go.disabled = true; wipe.disabled = true;
-    document.querySelectorAll(".m").forEach(x=>x.disabled=true);
-    showBar(true); setBar(0, "CONNECTING TO AI ENGINE");
-    hud("INSTALLING "+modelId.split("-")[0]+"...");
-    kst("⏳ DOWNLOADING","warn");
-    add(`Installing <b>${modelId.split("-Instruct")[0].split("-Chat")[0]}</b> into browser AI cache. Keep this tab open, Sir.`,"jar");
-
-    try{
-        const webllm = window.WEBLLM;
-        const e = new webllm.MLCEngine();
-        await e.reload(modelId, {
-            initProgressCallback: p => setBar(p.progress*100, p.text || "DOWNLOADING WEIGHTS")
-        });
-        engine = e; loaded = true; loadedModel = modelId.split("-Instruct")[0].split("-Chat")[0];
-        setBar(100, "ONLINE"); setTimeout(()=>showBar(false), 700);
-        hud(loadedModel+" AI ONLINE");
-        kst(KEY.length>20?"✅ LOCAL + CLOUD":"✅ LOCAL ACTIVE","ok");
-        reply(`${loadedModel} neural core installed and online, Sir. Cached internally — not in your files. Ask me anything.`);
-        return true;
-    }catch(err){
-        console.error(err);
-        showBar(false);
-        return false;
-    }finally{
-        busy = false; go.disabled = false; wipe.disabled = false;
-        document.querySelectorAll(".m").forEach(x=>x.disabled=false);
-    }
-}
-
-go.onclick = async () => {
-    if(busy) return;
-    const ok = await tryLoad(SELECTED);
-    if(ok) return;
-
-    // AUTO-FALLBACK: try smaller models in order
-    add(`That model couldn't run on this device. Auto-trying smaller optimized variants, Sir.`,"jar");
-    const idx = MODEL_ORDER.indexOf(SELECTED);
-    for(let i=idx-1;i>=0;i--){
-        hud(`TRYING ${MODEL_ORDER[i].split("-")[0]}...`);
-        const r = await tryLoad(MODEL_ORDER[i]);
-        if(r) return;
-    }
-
-    // ALL LOCAL FAILED — AUTO SWITCH TO GEMINI
-    hud("LOCAL NOT SUPPORTED — CLOUD MODE");
-    if(KEY.length>20){
-        kst("✅ CLOUD ACTIVE","ok");
-        reply("Local AI is not compatible with this device's available RAM. I have automatically switched to Gemini cloud intelligence — fully operational, Sir.");
-    } else {
-        kst("⚠ NEED GEMINI KEY","warn");
-        reply("This device cannot run local models right now, Sir. Please paste a valid Gemini API key above and click ACTIVATE to enable cloud AI + live search.");
-    }
-};
-
-wipe.onclick = async () => {
-    if(!confirm("Delete all locally installed AI models from browser cache?")) return;
-    try{
-        const webllm = window.WEBLLM;
-        await webllm.MLCEngine.deleteAllChatTemplates();
-        const dbs = await indexedDB.databases();
-        dbs.forEach(db => { if(db.name && /mlc|webllm|llama|tiny|smol/i.test(db.name)) indexedDB.deleteDatabase(db.name); });
-        if("caches" in window){
-            const keys = await caches.keys();
-            for(const k of keys) if(/mlc|webllm|model/i.test(k)) await caches.delete(k);
-        }
-    }catch(e){}
-    engine = null; loaded = false; loadedModel = "";
-    hud("LOCAL AI WIPED");
-    kst(KEY.length>20?"✅ CLOUD ACTIVE":"AI: STANDBY", KEY.length>20?"ok":"bad");
-    reply("All local AI models erased from browser storage, Sir.");
-};
-
-async function localChat(text){
-    if(!loaded || !engine) return null;
-    try{
-        hud(loadedModel+" THINKING");
-        const sys = "You are JARVIS from Iron Man. Always call the user 'Sir'. Be calm, precise, witty, helpful. Use Tagalog/Taglish if user does. Keep answers clear.";
-        const r = await engine.chat.completions.create({
-            messages: [{role:"system",content:sys},{role:"user",content:text}],
-            stream:false, temperature:0.7, max_tokens:900
-        });
-        return r.choices[0].message.content.trim();
-    }catch(e){ return null; }
-}
-
-/* ---------- GEMINI CLOUD ---------- */
-async function cloudChat(text){
-    if(!KEY) return null;
+/* ---------- GEMINI AI (PRIMARY — 100% WORKING) ---------- */
+async function askGemini(text){
+    if(KEY.length < 20) return "__NO_KEY__";
     try{
         hud(SEARCH?"GEMINI + LIVE SEARCH":"GEMINI THINKING");
         const body = {
             contents:[{ role:"user", parts:[{ text:
-                `You are JARVIS. Always call user Sir. Answer clearly and helpfully.\n\nUSER: ${text}` }] }]
+                `You are JARVIS from Iron Man. ALWAYS call user 'Sir'. Be calm, precise, witty, helpful, thorough.
+Use Tagalog/Taglish/Bisaya if user writes in those languages.
+Current date: ${new Date().toLocaleDateString("en-PH")}. Location: Baybay City, Leyte, PH (UTC+8).
+
+USER: ${text}` }] }]
         };
         if(SEARCH) body.tools = [{ googleSearch:{} }];
-        const res = await fetch(GAPI+KEY, {
+        const r = await fetch(URL+KEY,{
             method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)
         });
-        if(!res.ok) throw 0;
-        const d = await res.json();
+        const d = await r.json();
+        if(!r.ok){
+            const err = d?.error?.message || JSON.stringify(d).slice(0,300);
+            return "__ERR__"+r.status+": "+err;
+        }
         return d?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
-    }catch(e){ return null; }
+    }catch(e){
+        return "__ERR__Network: "+e.message;
+    }
 }
 
 /* ---------- MAIN ROUTER ---------- */
 async function run(text){
     text = text.trim(); if(!text) return;
     add(text,"you"); q.value = "";
-    const f = fast(text);
-    if(f){ reply(f); return; }
+    const f = bi(text); if(f){ reply(f); return; }
 
-    dots(true, loaded?"LOCAL THINKING":"FETCHING ANSWER");
-    let ans = null;
-    if(loaded) ans = await localChat(text);
-    if(!ans) ans = await cloudChat(text);
-    if(!ans) ans = "No AI is currently active, Sir. Install TinyLlama 1.1B above (guaranteed to work) or paste a Gemini API key and click ACTIVATE.";
-
+    dots(true, SEARCH?"SEARCHING & THINKING":"THINKING");
+    const ans = await askGemini(text);
     dots(false);
+
+    if(ans === "__NO_KEY__"){
+        reply("No Gemini key activated yet, Sir. Paste your key above, click ACTIVATE, then TEST KEY.");
+        return;
+    }
+    if(ans && ans.startsWith("__ERR__")){
+        add("<b class='err'>AI ERROR:</b><br>"+ans.replace("__ERR__","").replace(/</g,"&lt;"),"jar");
+        hud("ERROR");
+        return;
+    }
+    if(!ans){
+        reply("No response received, Sir. Please click TEST KEY above to diagnose.");
+        return;
+    }
     reply(ans);
 }
 
 send.onclick = () => run(q.value);
 q.onkeydown = e => { if(e.key === "Enter") run(q.value); };
 clr.onclick = () => {
-    chat.innerHTML = `<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat memory cleared, Sir.</div></div>`;
+    chat.innerHTML = `<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat cleared, Sir.</div></div>`;
     if("speechSynthesis" in window) speechSynthesis.cancel();
 };
 
