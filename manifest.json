@@ -1,0 +1,14 @@
+{
+  "name": "CYBERJAYD J.A.R.V.I.S",
+  "short_name": "JARVIS AI",
+  "description": "Official J.A.R.V.I.S AI Assistant — 3D Holographic Interface, Built 100% on Android",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#01060f",
+  "theme_color": "#00e5ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {"src":"https://cdn-icons-png.flaticon.com/512/126/126473.png","sizes":"192x192","type":"image/png"},
+    {"src":"https://cdn-icons-png.flaticon.com/512/126/126473.png","sizes":"512x512","type":"image/png"}
+  ]
+}
