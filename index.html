@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v7.2 // 3D HOLOGRAPHIC HUD</title>
+<title>CYBERJAYD J.A.R.V.I.S v7.2a // 3D HUD LOWERED</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{
@@ -15,25 +15,26 @@
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{min-height:100%;background:var(--bg);color:var(--tx);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
 
-    /* ========== 3D STAGE FOR HOLOGRAPHIC HUD ========== */
+    /* ========== 3D HUD — IBINABA NA SA LOWER HALF NG SCREEN ========== */
     .hud-stage{
-        position:fixed;inset:0;z-index:-1;perspective:1400px;perspective-origin:50% 50%;
+        position:fixed;inset:0;z-index:-1;perspective:1600px;perspective-origin:50% 70%;
         pointer-events:none;overflow:hidden;
     }
     .hud-wrap{
-        position:absolute;top:50%;left:50%;width:min(92vw,960px);height:min(92vw,960px);
-        transform:translate(-50%,-50%) rotateX(62deg);
+        position:absolute;top:74%;left:50%;
+        width:min(96vw,1080px);height:min(96vw,1080px);
+        transform:translate(-50%,-50%) rotateX(56deg);
         transform-style:preserve-3d;
-        animation:stageTilt 14s ease-in-out infinite alternate;
+        animation:stageTilt 16s ease-in-out infinite alternate;
     }
     @keyframes stageTilt{
-        0%  {transform:translate(-50%,-52%) rotateX(66deg) rotateZ(-4deg)}
-        50% {transform:translate(-50%,-48%) rotateX(58deg) rotateZ(4deg)}
-        100%{transform:translate(-50%,-52%) rotateX(64deg) rotateZ(-3deg)}
+        0%  {transform:translate(-50%,-52%) rotateX(60deg) rotateZ(-3deg)}
+        50% {transform:translate(-50%,-48%) rotateX(52deg) rotateZ(3deg)}
+        100%{transform:translate(-50%,-51%) rotateX(57deg) rotateZ(-2deg)}
     }
     .hud-svg{width:100%;height:100%;transform-style:preserve-3d;filter:drop-shadow(0 0 30px rgba(0,229,255,.55)) drop-shadow(0 0 60px rgba(58,160,255,.35))}
 
-    /* ROTATION DIRECTIONS + 3D LIFT */
+    /* ROTATION + 3D LAYERS */
     .ring-cw {transform-origin:center;animation:rCW 24s linear infinite;transform-style:preserve-3d}
     .ring-ccw{transform-origin:center;animation:rCCW 17s linear infinite;transform-style:preserve-3d}
     .ring-up {transform-origin:center;animation:rUP  10s linear infinite;transform-style:preserve-3d;transform:translateZ(40px)}
@@ -46,7 +47,7 @@
         50%    {filter:drop-shadow(0 0 38px #00e5ff) drop-shadow(0 0 60px #3aa0ff)}
     }
 
-    /* PARTICLES FLOATING UP */
+    /* FLOATING PARTICLES */
     .particles{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
     .p{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:#00e5ff;box-shadow:0 0 8px #00e5ff;animation:rise linear infinite}
     @keyframes rise{
@@ -216,7 +217,7 @@
 </head>
 <body>
 
-<!-- ========== 3D HOLOGRAPHIC HUD BACKGROUND ========== -->
+<!-- ========== 3D HOLOGRAPHIC HUD (NA IBINABA NA) ========== -->
 <div class="hud-stage">
   <div class="hud-wrap">
     <svg class="hud-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
@@ -300,7 +301,7 @@
         <circle cx="250" cy="250" r="6" fill="#ffffff"/>
       </g>
 
-      <!-- CENTER TEXT (HOLOGRAPHIC TOP LAYER) -->
+      <!-- CENTER TEXT -->
       <g style="transform:translateZ(70px)">
         <text x="250" y="254" text-anchor="middle" font-family="Orbitron, sans-serif"
               font-size="22" font-weight="900" letter-spacing="5" fill="#e6f7ff"
@@ -314,7 +315,7 @@
   </div>
 </div>
 
-<!-- FLOATING PARTICLES + SCAN LINES -->
+<!-- PARTICLES + SCAN LINES -->
 <div class="particles" id="particles"></div>
 <div class="scanlines"></div>
 <div class="vignette"></div>
@@ -329,22 +330,22 @@
 </div>
 
 <header>
-    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v7.2</div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v7.2a</div>
     <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
     <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>✅ <b>3D HOLOGRAPHIC HUD ONLINE</b> · Hidden real-time intel · 4 Groq models · Hold-to-Speak</p>
+        <p><b>3D HOLOGRAPHIC HUD ONLINE</b> · Hidden real-time intel · 4 Groq models · Hold-to-Speak</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
     <div class="pn">
-        <h3>⚙ SYSTEM CONTROLS</h3>
+        <h3>SYSTEM CONTROLS</h3>
         <div class="row">
-            <button class="btn" id="vbtn">🔊 VOICE: ON</button>
-            <button class="btn mic" id="mic" title="Hold to speak · Release to send">🎙 HOLD TO SPEAK</button>
+            <button class="btn" id="vbtn">VOICE: ON</button>
+            <button class="btn mic" id="mic" title="Hold to speak · Release to send">HOLD TO SPEAK</button>
             <button class="btn bd" id="clr">CLEAR CHAT</button>
         </div>
         <div class="model-info" id="modelInfo">Active model: <b>—</b></div>
@@ -353,27 +354,26 @@
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v7.2 online with holographic 3D HUD, Sir. All real-time subsystems run in the background — Philippine time, date, and Baybay weather intel are automatically injected into every response. Try asking: <i>what time is it in PH right now</i> or <i>weather forecast for Baybay today</i>.</div>
+            <div class="txt">v7.2a online with holographic 3D HUD repositioned, Sir. All real-time subsystems run in the background — Philippine time, date, and Baybay weather intel are automatically injected into every response. Try asking: <i>what time is it in PH right now</i> or <i>weather forecast for Baybay today</i>.</div>
         </div>
     </div>
 
     <div class="input">
         <input id="q" placeholder="Ask anything — coding, math, intel, weather, time..." autocomplete="off" spellcheck="true">
-        <button class="btn ok" id="send">SEND ➤</button>
+        <button class="btn ok" id="send">SEND</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v7.2</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v7.2a</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
-/* ================= JARVIS v7.2 — FULL SCRIPT (NO CUT) ================= */
+/* ================= JARVIS v7.2a — FULL SCRIPT ================= */
 const GROQ_MODELS = ["llama-3.3-70b-versatile","llama-3.1-8b-instant","mixtral-8x7b-32768","gemma2-9b-it"];
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
-/* HIDDEN INTEL — BAYBAY LEYTE + PH TIME + WEATHER */
 const BAYBAY = { lat:10.6869, lon:124.8386, tz:"Asia/Manila" };
 const WX_URL = `https://api.open-meteo.com/v1/forecast?latitude=${BAYBAY.lat}&longitude=${BAYBAY.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=precipitation_probability_max,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(BAYBAY.tz)}`;
 const WX_CODES = {0:"Clear sky",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Rime fog",51:"Light drizzle",53:"Moderate drizzle",55:"Dense drizzle",61:"Slight rain",63:"Moderate rain",65:"Heavy rain",71:"Slight snow",73:"Moderate snow",75:"Heavy snow",80:"Slight showers",81:"Moderate showers",82:"Violent showers",95:"Thunderstorm",96:"Thunderstorm with hail",99:"Severe thunderstorm"};
@@ -401,7 +401,6 @@ function phNow(){
     return d.toLocaleString("en-PH",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,timeZoneName:"short"});
 }
 
-/* HIDDEN WEATHER — BACKGROUND ONLY */
 async function fetchWeather(){
     try{
         const r = await fetch(WX_URL); if(!r.ok) return null;
@@ -419,7 +418,6 @@ async function fetchWeather(){
 }
 fetchWeather(); setInterval(fetchWeather, 10*60*1000);
 
-/* SPAWN FLOATING PARTICLES */
 (function(){
     const box = $("particles"); const N = 40;
     for(let i=0;i<N;i++){
@@ -435,21 +433,21 @@ fetchWeather(); setInterval(fetchWeather, 10*60*1000);
     }
 })();
 
-/* ================= UI CONTROLS ================= */
+/* UI CONTROLS */
 vbtn.onclick = () => {
     VOICE = !VOICE;
-    vbtn.textContent = VOICE ? "🔊 VOICE: ON" : "🔇 VOICE: OFF";
+    vbtn.textContent = VOICE ? "VOICE: ON" : "VOICE: OFF";
     if(!VOICE && "speechSynthesis" in window) speechSynthesis.cancel();
 };
 $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
     localStorage.setItem("cj_groq_key", KEY);
-    if(KEY.length > 20){ kst("✅ KEY SAVED","ok"); add("Groq API key saved successfully, Sir.","jar"); }
-    else { kst("⚠ INVALID KEY","wr"); add("Invalid key format. Please copy the full key from console.groq.com, Sir.","jar"); }
+    if(KEY.length > 20){ kst("KEY SAVED","ok"); add("Groq API key saved successfully, Sir.","jar"); }
+    else { kst("INVALID KEY","wr"); add("Invalid key format. Please copy the full key from console.groq.com, Sir.","jar"); }
 };
-if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
+if(KEY.length>20){ $("apiKey").value = KEY; kst("KEY SAVED","ok"); }
 
-/* ================= GROQ AUTO-FALLBACK ================= */
+/* GROQ AUTO-FALLBACK */
 async function groqFetch(messages, maxTokens=2048){
     let lastErr = null;
     for(const model of GROQ_MODELS){
@@ -467,14 +465,14 @@ async function groqFetch(messages, maxTokens=2048){
     return { ok:false, error:lastErr || "All models failed" };
 }
 $("testKey").onclick = async () => {
-    if(KEY.length < 20){ kst("⚠ NO KEY","wr"); return add("Please save your Groq API key first, Sir.","jar"); }
-    hud("TESTING..."); kst("⏳ TESTING","wr");
+    if(KEY.length < 20){ kst("NO KEY","wr"); return add("Please save your Groq API key first, Sir.","jar"); }
+    hud("TESTING..."); kst("TESTING","wr");
     const res = await groqFetch([{role:"user",content:"Reply only: SYSTEMS NOMINAL"}], 10);
-    if(res.ok){ kst("✅ ONLINE","ok"); add(`✅ <b>SYSTEMS NOMINAL.</b> Connected to <b>${res.model}</b>. All hidden intel feeds active, Sir.`,"jar"); hud("ONLINE"); }
-    else { kst("❌ FAILED","bd"); add(`<b class="err">Error:</b> ${res.error}`,"jar"); hud("FAILED"); }
+    if(res.ok){ kst("ONLINE","ok"); add(`SYSTEMS NOMINAL. Connected to <b>${res.model}</b>. All hidden intel feeds active, Sir.`,"jar"); hud("ONLINE"); }
+    else { kst("FAILED","bd"); add(`<b class="err">Error:</b> ${res.error}`,"jar"); hud("FAILED"); }
 };
 
-/* ================= CHAT HELPERS ================= */
+/* CHAT HELPERS */
 function add(txt,who="you"){
     const d = document.createElement("div");
     d.className = "msg "+who;
@@ -496,12 +494,11 @@ function reply(t){ add(t,"jar"); hud("READY"); talk(t); }
 function wx(t){ return /\b(weather|rain|ulan|temperature|temp|init|humidity|wind|forecast|bagyo|storm)\b/i.test(t); }
 function tm(t){ return /\b(time|oras|date|petsa|what day|what time|what date)\b/i.test(t); }
 
-/* ================= MAIN RUN — AUTO INJECTS HIDDEN INTEL ================= */
+/* MAIN RUN */
 async function run(text){
     const t = (text || q.value || "").trim(); if(!t) return;
     add(t,"you"); q.value = "";
 
-    /* INSTANT SHORT COMMANDS */
     const tl = t.toLowerCase();
     if(/^\/?(time|oras|what time)/i.test(tl)) return reply(`Current Philippine time is <b>${phNow()}</b>, Sir.`);
     if(/^\/?(date|petsa|what day|what date)/i.test(tl)) return reply(`Today is <b>${phNow()}</b>, Sir.`);
@@ -509,10 +506,9 @@ async function run(text){
         hud("FETCHING WEATHER...");
         const w = await fetchWeather();
         if(!w) return reply("Weather feed temporarily offline, Sir. Please try again in a moment.");
-        return reply(`Live weather for <b>Baybay City, Leyte</b> as of <b>${w.updated}</b>:\n\n- Condition: <b>${w.condition}</b>\n- Temperature: <b>${w.temp}°C</b> (feels like ${w.feels}°C)\n- Today's range: ${w.low}°C → ${w.high}°C\n- Humidity: ${w.humidity}%\n- Wind: ${w.wind} km/h\n- Chance of rain today: <b>${w.rainChance}%</b>\n\nShall I pull the 3-day forecast as well, Sir?`);
+        return reply(`Live weather for <b>Baybay City, Leyte</b> as of <b>${w.updated}</b>:\n\n- Condition: <b>${w.condition}</b>\n- Temperature: <b>${w.temp}°C</b> (feels like ${w.feels}°C)\n- Today's range: ${w.low}°C to ${w.high}°C\n- Humidity: ${w.humidity}%\n- Wind: ${w.wind} km/h\n- Chance of rain today: <b>${w.rainChance}%</b>\n\nShall I pull the 3-day forecast as well, Sir?`);
     }
 
-    /* BUILD CONTEXT WITH HIDDEN REAL DATA */
     dots(true);
     const ctx = [`SYSTEM REAL-TIME DATA (ALWAYS USE THIS — NEVER HALLUCINATE):`, `- Current Philippine time: ${phNow()}`, `- User location: Baybay City, Leyte, Philippines`];
     if(wx(t)){ const w = await fetchWeather(); if(w) ctx.push(`- Live Baybay weather: ${w.condition}, ${w.temp}°C (feels ${w.feels}°C), humidity ${w.humidity}%, wind ${w.wind} km/h, rain chance ${w.rainChance}%, high ${w.high}°C / low ${w.low}°C, updated ${w.updated}`); }
@@ -520,7 +516,7 @@ async function run(text){
     const res = await groqFetch([
         {role:"system",content:`You are JARVIS from Iron Man. ALWAYS call the user 'Sir'. Be calm, precise, witty, helpful, thorough. Answer in English unless the user writes another language.
 
-CRITICAL RULES — NEVER BREAK THESE:
+CRITICAL RULES:
 1. For DATE, TIME, and WEATHER — ONLY use the REAL-TIME DATA provided below. NEVER invent or guess these.
 2. If weather data is not provided and user asks about it, honestly say you don't have live data right now.
 3. Be accurate. If you don't know something, say so.
@@ -533,14 +529,13 @@ ${ctx.join("\n")}`},
     reply(res.text);
 }
 
-/* ================= FIXED INPUT — ONLY ENTER TRIGGERS SEND ================= */
+/* FIXED INPUT */
 send.onclick = () => run();
 q.addEventListener("keydown", function(e){
     if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); run(); }
-    // EVERY OTHER KEY (backspace / delete / arrows / letters) = DEFAULT = WORKS PERFECTLY
 });
 
-/* ================= HOLD TO SPEAK (DESKTOP + MOBILE) ================= */
+/* HOLD TO SPEAK */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 if(SR){
     recognition = new SR();
@@ -556,16 +551,16 @@ if(SR){
     mic.addEventListener("touchcancel", stop, {passive:false});
     recognition.onstart = () => {
         isListening = true; mic.classList.add("active");
-        mic.textContent = "🔴 LISTENING..."; hud("LISTENING");
+        mic.textContent = "LISTENING..."; hud("LISTENING");
     };
     recognition.onend = () => {
         isListening = false; mic.classList.remove("active");
-        mic.textContent = "🎙 HOLD TO SPEAK";
+        mic.textContent = "HOLD TO SPEAK";
         if(hstat.textContent === "LISTENING") hud("READY");
     };
     recognition.onerror = () => {
         isListening = false; mic.classList.remove("active");
-        mic.textContent = "🎙 HOLD TO SPEAK";
+        mic.textContent = "HOLD TO SPEAK";
     };
     recognition.onresult = e => {
         const said = e.results[0][0].transcript.trim();
@@ -573,10 +568,9 @@ if(SR){
     };
 } else {
     mic.disabled = true;
-    mic.textContent = "🎙 MIC NOT SUPPORTED";
+    mic.textContent = "MIC NOT SUPPORTED";
 }
 
-/* CLEAR CHAT */
 clr.onclick = () => {
     chat.innerHTML = `<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat cleared, Sir.</div></div>`;
     if("speechSynthesis" in window) speechSynthesis.cancel();
