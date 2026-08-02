@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v6.2 // GROQ AUTO-FALLBACK</title>
+<title>CYBERJAYD J.A.R.V.I.S v6.3 // ENGLISH</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{--bg:#020617;--pn:rgba(8,47,73,.32);--pn2:rgba(15,23,42,.6);--tx:#e0f2fe;--mt:#7dd3fc;--ac:#06b6d4;--ac2:#38bdf8;--ok:#10b981;--wr:#f59e0b;--bd:#ef4444;--ln:rgba(6,182,212,.32)}
@@ -76,22 +76,22 @@
 <body>
 
 <div class="tb">
-    <label>GROQ KEY</label>
-    <input id="apiKey" type="password" value="" autocomplete="off">
+    <label>Groq API Key</label>
+    <input id="apiKey" type="password" placeholder="Paste your key from console.groq.com/keys" autocomplete="off">
     <button class="btn ok" id="saveKey">SAVE</button>
     <button class="btn wr" id="testKey">TEST CONNECTION</button>
     <span class="st bd" id="kstat">CLICK TEST TO START</span>
 </div>
 
 <header>
-    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v6.2</div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v6.3</div>
     <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
     <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>✅ <b>GROQ AUTO-FALLBACK</b> — 4 na models ang susubukan hanggang may tumanggap. Siguradong gagana!</p>
+        <p>✅ <b>GROQ AUTO-FALLBACK</b> — 4 models will be tried automatically until one succeeds. Guaranteed to work.</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
@@ -108,36 +108,34 @@
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v6.2 online, Sir. Inayos ko na ang lahat ng model names — may 4 na akong nakahandang subukan. Pindutin mo lang ang <b>TEST CONNECTION</b> — awtomatiko akong lilipat sa model na tatanggapin ng Groq ngayon.</div>
+            <div class="txt">v6.3 online, Sir. All model names updated with auto-fallback. Paste your Groq key above, click <b>SAVE</b>, then <b>TEST CONNECTION</b> to begin.</div>
         </div>
     </div>
 
     <div class="input">
-        <input id="q" placeholder="Magtanong ka na — siguradong sasagot na ako...">
+        <input id="q" placeholder="Ask anything — coding, math, research, stories...">
         <button class="btn ok" id="send">SEND ➤</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v6.2</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v6.3</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
 /* =========================================================
-   JARVIS v6.2 — GROQ AUTO-FALLBACK: 4 ACTIVE MODELS
-   Kung mabigo ang isa, susubok agad ang susunod. WALANG "NOT SUPPORTED"!
+   JARVIS v6.3 — ENGLISH UI · GROQ AUTO-FALLBACK (4 ACTIVE MODELS)
    ========================================================= */
 const GROQ_MODELS = [
-    "llama-3.3-70b-versatile",      // ✅ BAGONG 70B (pinalit sa lumang 3.1)
-    "llama-3.1-8b-instant",          // ✅ PINAKA-STABLE · LAGING GUMAGANA
-    "mixtral-8x7b-32768",            // ✅ MABILIS · MALAKI CONTEXT
-    "gemma2-9b-it"                   // ✅ GOOGLE GEMMA · LIBRE RIN
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+    "mixtral-8x7b-32768",
+    "gemma2-9b-it"
 ];
 const URL = "https://api.groq.com/openai/v1/chat/completions";
 
 let KEY = localStorage.getItem("cj_groq_key") || "";
-localStorage.setItem("cj_groq_key", KEY);
 let ACTIVE_MODEL = null;
 let VOICE = true;
 
@@ -165,12 +163,18 @@ vbtn.onclick = () => {
 $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
     localStorage.setItem("cj_groq_key", KEY);
-    kst("✅ KEY SAVED","ok");
-    add("New Groq key saved, Sir.","jar");
+    if(KEY.length > 20){
+        kst("✅ KEY SAVED","ok");
+        add("Groq API key saved successfully, Sir.","jar");
+    } else {
+        kst("⚠ INVALID KEY","wr");
+        add("That does not appear to be a valid Groq key, Sir. Please copy the full key from console.groq.com.","jar");
+    }
 };
+if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
 
-/* ---------- CORE: AUTO-FALLBACK FETCH ---------- */
-async function groqFetch(messages, maxTokens=1024){
+/* ---------- AUTO-FALLBACK FETCH ---------- */
+async function groqFetch(messages, maxTokens=2048){
     let lastErr = null;
     for(const model of GROQ_MODELS){
         try{
@@ -185,28 +189,23 @@ async function groqFetch(messages, maxTokens=1024){
                 return { ok:true, text: d.choices[0].message.content.trim(), model };
             }
             lastErr = d?.error?.message || `HTTP ${r.status}`;
-        }catch(e){
-            lastErr = e.message;
-        }
+        }catch(e){ lastErr = e.message; }
     }
     return { ok:false, error:lastErr || "All models failed" };
 }
 
-/* ---------- TEST CONNECTION ---------- */
+/* ---------- TEST ---------- */
 $("testKey").onclick = async () => {
-    if(KEY.length < 20){ kst("⚠ KEY TOO SHORT","wr"); return add("Invalid Groq key format, Sir.","jar"); }
-    hud("TESTING ALL MODELS...");
-    kst("⏳ TESTING...","wr");
-
-    const res = await groqFetch([{role:"user",content:"Reply with only the word: SUCCESS"}], 10);
-
+    if(KEY.length < 20){ kst("⚠ NO KEY SET","wr"); return add("Please save your Groq API key first, Sir.","jar"); }
+    hud("TESTING MODELS..."); kst("⏳ TESTING","wr");
+    const res = await groqFetch([{role:"user",content:"Reply with only: SUCCESS"}], 8);
     if(res.ok){
         kst("✅ FULLY ONLINE","ok");
-        add(`✅ <b>SUCCESS!</b> Nakakonekta na gamit ang model na <b>${res.model}</b>. Wala nang "not supported" error, Sir. Magtanong ka na!`,"jar");
+        add(`✅ <b>SUCCESS!</b> Connected using <b>${res.model}</b>. No more model errors, Sir. Ask me anything now.`,"jar");
         hud("ONLINE");
     } else {
-        kst("❌ ALL FAILED","bd");
-        add(`<b class="err">Error:</b> ${res.error}<br><small>Karaniwang solusyon: baguhin ang API key o i-check ang internet.</small>`,"jar");
+        kst("❌ FAILED","bd");
+        add(`<b class="err">Error:</b> ${res.error}<br><small>Common fixes: use a new API key or check your connection.</small>`,"jar");
         hud("FAILED");
     }
 };
@@ -231,19 +230,17 @@ function talk(t){
 }
 function reply(t){ add(t,"jar"); hud("READY"); talk(t); }
 
-/* ---------- MAIN CHAT ---------- */
+/* ---------- MAIN ---------- */
 async function run(){
     const t = q.value.trim(); if(!t) return;
     add(t,"you"); q.value="";
     dots(true);
-
     const res = await groqFetch([
-        {role:"system",content:"You are JARVIS from Iron Man. ALWAYS call the user 'Sir'. Be calm, precise, witty, helpful. Use Tagalog/Taglish if the user speaks Tagalog or Bisaya. Keep answers clear."},
+        {role:"system",content:"You are JARVIS from Iron Man. ALWAYS address the user as 'Sir'. Be calm, precise, witty, helpful, and thorough. Answer in English unless the user writes in another language."},
         {role:"user",content:t}
     ]);
-
     dots(false);
-    if(!res.ok) return reply(`Pasensya na Sir, pansamantalang hindi makasagot: ${res.error}`);
+    if(!res.ok) return reply(`I am unable to answer right now, Sir. Reason: ${res.error}`);
     reply(res.text);
 }
 
@@ -251,14 +248,12 @@ send.onclick = run;
 q.onkeydown = e => e.key==="Enter" && run();
 clr.onclick = () => { chat.innerHTML=`<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat cleared, Sir.</div></div>`; };
 
-/* ---------- VOICE INPUT ---------- */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 if(SR){
     const rec = new SR(); rec.lang="en-US";
     rec.onresult = e => { q.value = e.results[0][0].transcript; run(); };
     mic.onclick = () => { try{rec.start()}catch(e){} };
 }else mic.disabled = true;
-
 </script>
 </body>
 </html>
