@@ -3,39 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYBERJAYD J.A.R.V.I.S v7.0 // ANIMATED HUD</title>
+<title>CYBERJAYD J.A.R.V.I.S v7.1 // REAL-TIME SYSTEMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root{--bg:#020617;--pn:rgba(8,47,73,.38);--pn2:rgba(15,23,42,.72);--tx:#e0f2fe;--mt:#7dd3fc;--ac:#06b6d4;--ac2:#38bdf8;--ok:#10b981;--wr:#f59e0b;--bd:#ef4444;--ln:rgba(6,182,212,.38)}
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{min-height:100%;background:var(--bg);color:var(--tx);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
 
-    /* ========== ANIMATED JARVIS HUD BACKGROUND (OPPOSITE ROTATION) ========== */
-    .hud-bg{
-        position:fixed;inset:0;margin:auto;width:min(90vw,900px);height:min(90vw,900px);
-        z-index:-1;opacity:.22;pointer-events:none;user-select:none;
-        top:50%;left:50%;transform:translate(-50%,-50%);
-        filter:drop-shadow(0 0 22px rgba(6,182,212,.55))
-    }
+    /* ANIMATED JARVIS HUD — OPPOSITE ROTATION */
+    .hud-bg{position:fixed;inset:0;margin:auto;width:min(90vw,900px);height:min(90vw,900px);z-index:-1;opacity:.22;pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 0 22px rgba(6,182,212,.55))}
     .spin-cw{transform-origin:center;animation:spinCW 22s linear infinite}
     .spin-ccw{transform-origin:center;animation:spinCCW 16s linear infinite}
     .spin-fast{transform-origin:center;animation:spinCW 8s linear infinite}
     @keyframes spinCW{to{transform:rotate(360deg)}}
     @keyframes spinCCW{to{transform:rotate(-360deg)}}
 
-    body::before{content:"";position:fixed;inset:0;z-index:-2;background:
-        radial-gradient(ellipse at 20% 0%,rgba(6,182,212,.22),transparent 55%),
-        radial-gradient(ellipse at 80% 100%,rgba(59,130,246,.18),transparent 55%),
-        #020617}
-    body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
-        background-image:linear-gradient(rgba(6,182,212,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,.6) 1px,transparent 1px);
-        background-size:40px 40px}
+    body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 20% 0%,rgba(6,182,212,.22),transparent 55%),radial-gradient(ellipse at 80% 100%,rgba(59,130,246,.18),transparent 55%),#020617}
+    body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;background-image:linear-gradient(rgba(6,182,212,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,.6) 1px,transparent 1px);background-size:40px 40px}
 
+    .live-bar{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;padding:8px 5%;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--mt);border-bottom:1px solid var(--ln);background:rgba(2,6,23,.6)}
+    .live-bar b{color:var(--ok)}
     .tb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 5%;border-bottom:1px solid var(--ln);background:rgba(2,6,23,.82);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50}
     .tb label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:var(--ac);text-transform:uppercase}
     .tb input{flex:1;min-width:220px;padding:8px 12px;background:rgba(15,23,42,.85);border:1px solid var(--ln);border-radius:4px;color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:14px;outline:none}
     .tb input:focus{border-color:var(--ac);box-shadow:0 0 12px rgba(6,182,212,.4)}
-    .btn{padding:8px 14px;border:1px solid var(--ac);background:rgba(6,182,212,.1);color:var(--ac);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+    .btn{padding:8px 14px;border:1px solid var(--ac);background:rgba(6,182,212,.1);color:var(--ac);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s;user-select:none;touch-action:manipulation}
     .btn:hover{background:var(--ac);color:#020617;box-shadow:0 0 18px rgba(6,182,212,.6)}
     .btn:active{transform:scale(.97)}
     .btn.ok{border-color:var(--ok);background:rgba(16,185,129,.1);color:var(--ok)}
@@ -44,17 +36,9 @@
     .btn.bd:hover{background:var(--bd);color:#fff;box-shadow:0 0 18px rgba(239,68,68,.5)}
     .btn.wr{border-color:var(--wr);background:rgba(245,158,11,.1);color:var(--wr)}
     .btn.wr:hover{background:var(--wr);color:#020617;box-shadow:0 0 18px rgba(245,158,11,.5)}
-    /* ========== HOLD TO SPEAK BUTTON ========== */
-    .btn.mic{
-        border-color:var(--ac2);background:rgba(56,189,248,.12);color:var(--ac2);
-        min-width:160px
-    }
+    .btn.mic{border-color:var(--ac2);background:rgba(56,189,248,.12);color:var(--ac2);min-width:170px}
     .btn.mic:hover{background:var(--ac2);color:#020617;box-shadow:0 0 20px rgba(56,189,248,.6)}
-    .btn.mic.active, .btn.mic:active{
-        background:var(--ac);color:#020617;border-color:var(--ac);
-        box-shadow:0 0 28px rgba(6,182,212,.85),inset 0 0 12px rgba(255,255,255,.25);
-        animation:pulseMic .7s ease-in-out infinite
-    }
+    .btn.mic.active{background:var(--ac);color:#020617;border-color:var(--ac);box-shadow:0 0 28px rgba(6,182,212,.85);animation:pulseMic .7s ease-in-out infinite}
     @keyframes pulseMic{0%,100%{box-shadow:0 0 20px rgba(6,182,212,.7)}50%{box-shadow:0 0 38px rgba(6,182,212,1)}}
     .btn:disabled{opacity:.4;cursor:not-allowed}
     .st{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;color:var(--mt)}
@@ -99,12 +83,7 @@
     .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
     @keyframes dot{0%,60%,100%{transform:none}30%{transform:translateY(-5px)}}
     .input{display:flex;gap:8px}
-    /* ========== FIXED TEXT INPUT — BACKSPACE/WORKS PERFECTLY ========== */
-    .input input{
-        flex:1;padding:12px 14px;background:rgba(15,23,42,.88);border:1px solid var(--ln);border-radius:5px;
-        color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:15px;outline:none;
-        caret-color:var(--ac);inputmode:text;autocorrect:on;spellcheck:true
-    }
+    .input input{flex:1;padding:12px 14px;background:rgba(15,23,42,.88);border:1px solid var(--ln);border-radius:5px;color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:15px;outline:none;caret-color:var(--ac);inputmode:text;spellcheck:true}
     .input input:focus{border-color:var(--ac);box-shadow:0 0 12px rgba(6,182,212,.35)}
     footer{text-align:center;padding:18px 5%;border-top:1px solid var(--ln);color:var(--mt);font-size:12px;letter-spacing:1px;position:relative;z-index:1}
     footer b{color:var(--ac);font-family:'Orbitron',sans-serif;letter-spacing:1.5px}
@@ -113,38 +92,18 @@
 </head>
 <body>
 
-<!-- ========== JARVIS ANIMATED HUD SVG BACKGROUND ========== -->
+<!-- JARVIS HUD SVG BACKGROUND — 3 ROTATING LAYERS -->
 <svg class="hud-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#06b6d4"/>
-            <stop offset="100%" stop-color="#38bdf8"/>
-        </linearGradient>
-        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fbbf24"/>
-            <stop offset="100%" stop-color="#f59e0b"/>
-        </linearGradient>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
+        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
     </defs>
-
-    <!-- OUTER RING — CLOCKWISE -->
     <g class="spin-cw">
         <circle cx="250" cy="250" r="240" fill="none" stroke="url(#g1)" stroke-width="3" opacity=".85"/>
         <circle cx="250" cy="250" r="228" fill="none" stroke="#06b6d4" stroke-width="1.2" stroke-dasharray="8 14" opacity=".7"/>
-        <g stroke="url(#g1)" stroke-width="4" stroke-linecap="round">
-            <line x1="250" y1="14" x2="250" y2="32"/>
-            <line x1="250" y1="468" x2="250" y2="486"/>
-            <line x1="14" y1="250" x2="32" y2="250"/>
-            <line x1="468" y1="250" x2="486" y2="250"/>
-        </g>
-        <g fill="#fbbf24">
-            <circle cx="250" cy="55" r="4.5"/>
-            <circle cx="318" cy="78" r="3.5"/>
-            <circle cx="375" cy="135" r="3.5"/>
-            <circle cx="398" cy="203" r="4.5"/>
-        </g>
+        <g stroke="url(#g1)" stroke-width="4" stroke-linecap="round"><line x1="250" y1="14" x2="250" y2="32"/><line x1="250" y1="468" x2="250" y2="486"/><line x1="14" y1="250" x2="32" y2="250"/><line x1="468" y1="250" x2="486" y2="250"/></g>
+        <g fill="#fbbf24"><circle cx="250" cy="55" r="4.5"/><circle cx="318" cy="78" r="3.5"/><circle cx="375" cy="135" r="3.5"/><circle cx="398" cy="203" r="4.5"/></g>
     </g>
-
-    <!-- MIDDLE RING — COUNTER-CLOCKWISE (OPPOSITE) -->
     <g class="spin-ccw">
         <circle cx="250" cy="250" r="200" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2 10" opacity=".8"/>
         <circle cx="250" cy="250" r="178" fill="none" stroke="url(#g1)" stroke-width="1.5" opacity=".6"/>
@@ -155,14 +114,10 @@
             <path d="M428 250 L408 242 L408 258 Z" fill="url(#g2)"/>
         </g>
     </g>
-
-    <!-- INNER FAST RING — CLOCKWISE AGAIN (3 DIRECTIONS TOTAL) -->
     <g class="spin-fast">
         <circle cx="250" cy="250" r="145" fill="none" stroke="#7dd3fc" stroke-width="1.2" stroke-dasharray="22 8" opacity=".75"/>
         <circle cx="250" cy="250" r="120" fill="none" stroke="url(#g2)" stroke-width="1.8" stroke-dasharray="4 18" opacity=".85"/>
     </g>
-
-    <!-- CENTER J.A.R.V.I.S — STATIC -->
     <g>
         <circle cx="250" cy="250" r="95" fill="none" stroke="url(#g1)" stroke-width="3" opacity=".9"/>
         <circle cx="250" cy="250" r="78" fill="rgba(6,182,212,.06)" stroke="#06b6d4" stroke-width="1.2" opacity=".7"/>
@@ -171,23 +126,31 @@
     </g>
 </svg>
 
+<!-- REAL-TIME LIVE BAR -->
+<div class="live-bar">
+    <span>📍 BAYBAY, LEYTE PH</span>
+    <span>🕒 <b id="clock">--:--:--</b></span>
+    <span>📅 <b id="datelive">Loading...</b></span>
+    <span>🌡 <b id="wxmini">--°C</b></span>
+</div>
+
 <div class="tb">
     <label>Groq API Key</label>
-    <input id="apiKey" type="password" placeholder="Paste your key from console.groq.com/keys" autocomplete="off">
+    <input id="apiKey" type="password" placeholder="Paste key from console.groq.com/keys" autocomplete="off">
     <button class="btn ok" id="saveKey">SAVE</button>
     <button class="btn wr" id="testKey">TEST CONNECTION</button>
     <span class="st bd" id="kstat">CLICK TEST TO START</span>
 </div>
 
 <header>
-    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v7.0</div>
+    <div class="br"><b>CYBER</b><i>JAYD</i> // J.A.R.V.I.S v7.1</div>
     <div class="hd"><div class="dt"></div><span id="hstat">READY</span></div>
 </header>
 
 <main>
     <div class="gr">
         <h1>GOOD <span id="gr">DAY</span>, SIR.</h1>
-        <p>✅ <b>GROQ AUTO-FALLBACK</b> · 4 models · Animated HUD · Hold-to-Speak · Fixed input</p>
+        <p>✅ <b>REAL-TIME SYSTEMS ONLINE</b> · Live PH clock · Baybay weather · 4 Groq models · Hold-to-Speak</p>
     </div>
     <div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
@@ -195,8 +158,7 @@
         <h3>⚙ SYSTEM CONTROLS</h3>
         <div class="row">
             <button class="btn" id="vbtn">🔊 VOICE: ON</button>
-            <!-- ========== NEW: HOLD TO SPEAK ========== -->
-            <button class="btn mic" id="mic" title="Press and hold to speak, release to send">🎙 HOLD TO SPEAK</button>
+            <button class="btn mic" id="mic" title="Hold to speak, release to send">🎙 HOLD TO SPEAK</button>
             <button class="btn bd" id="clr">CLEAR CHAT</button>
         </div>
         <div class="model-info" id="modelInfo">Active model: <b>—</b></div>
@@ -205,42 +167,49 @@
     <div class="chat" id="chat">
         <div class="msg jar">
             <div class="tag">JARVIS</div>
-            <div class="txt">v7.0 online with animated HUD, Sir. <b>Hold the MIC button to speak, release to send.</b> Text input is fully fixed — backspace/delete works normally now.</div>
+            <div class="txt">v7.1 online with real-time subsystems, Sir. Clock and date are now synced to Philippine time, and weather is pulled live from satellite feeds for <b>Baybay, Leyte</b>. Try asking: <i>what time is it</i>, <i>what's the date</i>, or <i>weather today</i>.</div>
         </div>
     </div>
 
     <div class="input">
-        <input id="q" placeholder="Ask anything — coding, math, research, stories..." autocomplete="off" spellcheck="true">
+        <input id="q" placeholder="Ask anything — try: what's the weather in Baybay today?" autocomplete="off" spellcheck="true">
         <button class="btn ok" id="send">SEND ➤</button>
     </div>
 </main>
 
 <footer>
-    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v7.0</div>
+    <div><b>CYBERJAYD SYSTEMS</b> // J.A.R.V.I.S v7.1</div>
     <div>BUILT 100% ON ANDROID · JAYD F. REPOBERBIO · BAYBAY LEYTE PH</div>
 </footer>
 
 <script>
-/* =========================================================
-   JARVIS v7.0 — ANIMATED HUD · HOLD-TO-SPEAK · FIXED INPUT
-   ========================================================= */
-const GROQ_MODELS = [
-    "llama-3.3-70b-versatile",
-    "llama-3.1-8b-instant",
-    "mixtral-8x7b-32768",
-    "gemma2-9b-it"
-];
-const URL = "https://api.groq.com/openai/v1/chat/completions";
+/* ================= JARVIS v7.1 — REAL TIME + LIVE WEATHER ================= */
+const GROQ_MODELS = ["llama-3.3-70b-versatile","llama-3.1-8b-instant","mixtral-8x7b-32768","gemma2-9b-it"];
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+/* BAYBAY LEYTE COORDINATES + FREE WEATHER API (NO KEY NEEDED) */
+const BAYBAY = { lat: 10.6869, lon: 124.8386, tz: "Asia/Manila" };
+const WX_URL = `https://api.open-meteo.com/v1/forecast?latitude=${BAYBAY.lat}&longitude=${BAYBAY.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=precipitation_probability_max,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(BAYBAY.tz)}`;
+
+const WX_CODES = {
+    0:"Clear sky", 1:"Mainly clear", 2:"Partly cloudy", 3:"Overcast",
+    45:"Foggy", 48:"Depositing rime fog",
+    51:"Light drizzle", 53:"Moderate drizzle", 55:"Dense drizzle",
+    61:"Slight rain", 63:"Moderate rain", 65:"Heavy rain",
+    71:"Slight snow", 73:"Moderate snow", 75:"Heavy snow",
+    80:"Slight rain showers", 81:"Moderate rain showers", 82:"Violent rain showers",
+    95:"Thunderstorm", 96:"Thunderstorm with hail", 99:"Severe thunderstorm"
+};
 
 let KEY = localStorage.getItem("cj_groq_key") || "";
 let ACTIVE_MODEL = null;
 let VOICE = true;
 let recognition = null;
 let isListening = false;
+let lastWeather = null;
 
 const $ = id => document.getElementById(id);
-const chat=$("chat"), q=$("q"), send=$("send");
-const vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
+const chat=$("chat"), q=$("q"), send=$("send"), vbtn=$("vbtn"), mic=$("mic"), clr=$("clr");
 const hstat=$("hstat"), kstat=$("kstat"), modelInfo=$("modelInfo");
 
 const hr = new Date().getHours();
@@ -250,6 +219,60 @@ function hud(t){ hstat.textContent = t.toUpperCase(); }
 function kst(t,c){ kstat.textContent = t; kstat.className = "st "+(c||""); }
 function setModel(m){ ACTIVE_MODEL = m; modelInfo.innerHTML = `Active model: <b>${m}</b>`; }
 
+/* ================= LIVE CLOCK (PH TIME) ================= */
+function pad(n){return String(n).padStart(2,"0")}
+function updateClock(){
+    const d = new Date();
+    const ph = new Date(d.toLocaleString("en-US",{timeZone:BAYBAY.tz}));
+    $("clock").textContent = `${pad(ph.getHours())}:${pad(ph.getMinutes())}:${pad(ph.getSeconds())}`;
+    $("datelive").textContent = ph.toLocaleDateString("en-PH",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+}
+updateClock(); setInterval(updateClock, 1000);
+
+function phNow(){
+    const d = new Date(new Date().toLocaleString("en-US",{timeZone:BAYBAY.tz}));
+    return d.toLocaleString("en-PH",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,timeZoneName:"short"});
+}
+
+/* ================= LIVE WEATHER — BAYBAY LEYTE ================= */
+async function fetchWeather(){
+    try{
+        const r = await fetch(WX_URL);
+        if(!r.ok) return null;
+        const d = await r.json();
+        const c = d.current;
+        const day = d.daily;
+        const data = {
+            temp: Math.round(c.temperature_2m),
+            feels: Math.round(c.apparent_temperature),
+            humidity: Math.round(c.relative_humidity_2m),
+            wind: Math.round(c.wind_speed_10m),
+            rain: c.precipitation,
+            condition: WX_CODES[c.weather_code] || "Unknown",
+            rainChance: day.precipitation_probability_max[0],
+            high: Math.round(day.temperature_2m_max[0]),
+            low: Math.round(day.temperature_2m_min[0]),
+            updated: phNow()
+        };
+        lastWeather = data;
+        $("wxmini").textContent = `${data.temp}°C · ${data.condition}`;
+        return data;
+    }catch(e){ return null; }
+}
+fetchWeather(); setInterval(fetchWeather, 10*60*1000); // refresh every 10 mins
+
+function formatWeather(w){
+    return `LIVE WEATHER DATA — Baybay City, Leyte, PH (as of ${w.updated}):
+- Condition: ${w.condition}
+- Temperature: ${w.temp}°C (feels like ${w.feels}°C)
+- Today's range: ${w.low}°C low → ${w.high}°C high
+- Humidity: ${w.humidity}%
+- Wind: ${w.wind} km/h
+- Rain chance today: ${w.rainChance}%
+- Recent precipitation: ${w.rain} mm`;
+}
+
+/* ================= UI CONTROLS ================= */
 vbtn.onclick = () => {
     VOICE = !VOICE;
     vbtn.textContent = VOICE ? "🔊 VOICE: ON" : "🔇 VOICE: OFF";
@@ -260,16 +283,16 @@ $("saveKey").onclick = () => {
     KEY = $("apiKey").value.trim();
     localStorage.setItem("cj_groq_key", KEY);
     if(KEY.length > 20){ kst("✅ KEY SAVED","ok"); add("Groq API key saved successfully, Sir.","jar"); }
-    else { kst("⚠ INVALID KEY","wr"); add("Invalid key format. Please copy the full key from console.groq.com, Sir.","jar"); }
+    else { kst("⚠ INVALID KEY","wr"); add("Invalid key format, Sir.","jar"); }
 };
 if(KEY.length>20){ $("apiKey").value = KEY; kst("✅ KEY SAVED","ok"); }
 
-/* ---------- AUTO-FALLBACK GROQ FETCH ---------- */
+/* ================= GROQ AUTO-FALLBACK ================= */
 async function groqFetch(messages, maxTokens=2048){
     let lastErr = null;
     for(const model of GROQ_MODELS){
         try{
-            const r = await fetch(URL,{
+            const r = await fetch(GROQ_URL,{
                 method:"POST",
                 headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},
                 body: JSON.stringify({ model, messages, max_tokens:maxTokens, temperature:0.7 })
@@ -282,16 +305,15 @@ async function groqFetch(messages, maxTokens=2048){
     return { ok:false, error:lastErr || "All models failed" };
 }
 
-/* ---------- TEST CONNECTION ---------- */
 $("testKey").onclick = async () => {
     if(KEY.length < 20){ kst("⚠ NO KEY","wr"); return add("Please save your Groq API key first, Sir.","jar"); }
     hud("TESTING..."); kst("⏳ TESTING","wr");
-    const res = await groqFetch([{role:"user",content:"Reply only: SUCCESS"}], 8);
-    if(res.ok){ kst("✅ ONLINE","ok"); add(`✅ <b>SUCCESS!</b> Connected to <b>${res.model}</b>. All systems nominal, Sir.`,"jar"); hud("ONLINE"); }
+    const res = await groqFetch([{role:"user",content:"Reply only: SYSTEMS NOMINAL"}], 10);
+    if(res.ok){ kst("✅ ONLINE","ok"); add(`✅ <b>SYSTEMS NOMINAL.</b> Connected to <b>${res.model}</b>. Real-time clock and Baybay weather feeds active, Sir.`,"jar"); hud("ONLINE"); }
     else { kst("❌ FAILED","bd"); add(`<b class="err">Error:</b> ${res.error}`,"jar"); hud("FAILED"); }
 };
 
-/* ---------- CHAT HELPERS ---------- */
+/* ================= CHAT HELPERS ================= */
 function add(txt,who="you"){
     const d = document.createElement("div");
     d.className = "msg "+who;
@@ -301,7 +323,7 @@ function add(txt,who="you"){
 function dots(show){
     if(!show){ const t=document.getElementById("dots"); if(t) t.remove(); return; }
     const d = document.createElement("div"); d.className="msg jar"; d.id="dots";
-    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">THINKING <span class="dots"><span></span><span></span><span></span></span></div>`;
+    d.innerHTML = `<div class="tag">JARVIS</div><div class="txt">PROCESSING <span class="dots"><span></span><span></span><span></span></span></div>`;
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
 }
 function talk(t){
@@ -311,13 +333,43 @@ function talk(t){
 }
 function reply(t){ add(t,"jar"); hud("READY"); talk(t); }
 
-/* ---------- MAIN RUN ---------- */
+function weatherAsked(t){
+    return /\b(weather|rain|ulan|temperature|temp|init|humidity|wind|forecast|bagyo|storm)\b/i.test(t);
+}
+
+/* ================= MAIN RUN — REAL DATA INJECTED ================= */
 async function run(text){
     const t = (text || q.value || "").trim(); if(!t) return;
     add(t,"you"); q.value = "";
+
+    /* INSTANT COMMANDS (NO API CALL NEEDED) */
+    const tl = t.toLowerCase();
+    if(/^\/?(time|oras|what time)/i.test(tl)) return reply(`Current time in Baybay City, Leyte is <b>${phNow()}</b>, Sir.`);
+    if(/^\/?(date|petsa|what day|what date)/i.test(tl)) return reply(`Today is <b>${phNow()}</b>, Sir.`);
+    if(/^\/?(weather|wx|ulan|init)/i.test(tl)){
+        hud("FETCHING WEATHER...");
+        const w = await fetchWeather();
+        if(!w) return reply("Weather feed temporarily offline, Sir. Please try again in a moment.");
+        return reply(`Here is the live weather for <b>Baybay City, Leyte</b> as of <b>${w.updated}</b>:\n\n- Condition: <b>${w.condition}</b>\n- Temperature: <b>${w.temp}°C</b> (feels like ${w.feels}°C)\n- Today's range: ${w.low}°C → ${w.high}°C\n- Humidity: ${w.humidity}%\n- Wind: ${w.wind} km/h\n- Chance of rain today: <b>${w.rainChance}%</b>\n\nShall I also brief you on the 3-day forecast, Sir?`);
+    }
+
+    /* BUILD CONTEXT WITH REAL DATA + AUTO WEATHER FETCH */
     dots(true);
+    const ctx = [`SYSTEM REAL-TIME DATA (ALWAYS ACCURATE):`, `- Current Philippine time: ${phNow()}`, `- User location: Baybay City, Leyte, Philippines`];
+    if(weatherAsked(t)){
+        const w = await fetchWeather();
+        if(w) ctx.push("- " + formatWeather(w));
+    }
+
     const res = await groqFetch([
-        {role:"system",content:"You are JARVIS from Iron Man. ALWAYS call the user 'Sir'. Be calm, precise, witty, helpful, thorough. Answer in English unless told otherwise."},
+        {role:"system",content:`You are JARVIS from Iron Man. ALWAYS call the user 'Sir'. Be calm, precise, witty, helpful, thorough. Answer in English unless the user writes another language.
+
+CRITICAL RULES:
+1. USE ONLY THE REAL-TIME DATA PROVIDED BELOW FOR DATE, TIME, AND WEATHER. NEVER HALLUCINATE THESE.
+2. If the user asks for date/time/weather and data is provided, use it exactly.
+3. If no weather data is provided, DO NOT invent weather — say you don't have live data right now.
+
+${ctx.join("\n")}`},
         {role:"user",content:t}
     ]);
     dots(false);
@@ -325,70 +377,26 @@ async function run(text){
     reply(res.text);
 }
 
-/* ========== FIXED TEXT INPUT — ONLY SUBMIT ON ACTUAL ENTER ========== */
+/* ================= FIXED INPUT — ONLY ENTER SUBMITS ================= */
 send.onclick = () => run();
 q.addEventListener("keydown", function(e){
-    // ONLY trigger send when Enter is pressed WITHOUT shift (for newlines if needed)
-    // All other keys (backspace, delete, arrows, letters) work normally — no interference
-    if(e.key === "Enter" && !e.shiftKey){
-        e.preventDefault();
-        run();
-    }
-    // every other key (backspace / delete / arrows / letters) = DEFAULT BEHAVIOR = works perfectly
+    if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); run(); }
 });
 
-/* ========== HOLD TO SPEAK (DESKTOP + MOBILE) ========== */
+/* ================= HOLD TO SPEAK ================= */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 if(SR){
     recognition = new SR();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
-    recognition.maxAlternatives = 1;
-
-    const startListen = (e) => {
-        e.preventDefault();
-        if(isListening) return;
-        try{
-            recognition.start();
-        }catch(err){}
-    };
-    const stopListen = (e) => {
-        e.preventDefault();
-        if(!isListening) return;
-        try{ recognition.stop(); }catch(err){}
-    };
-
-    // Desktop: mouse
-    mic.addEventListener("mousedown", startListen);
-    mic.addEventListener("mouseup", stopListen);
-    mic.addEventListener("mouseleave", stopListen);
-    // Mobile: touch
-    mic.addEventListener("touchstart", startListen, {passive:false});
-    mic.addEventListener("touchend", stopListen, {passive:false});
-    mic.addEventListener("touchcancel", stopListen, {passive:false});
-
-    recognition.onstart = () => {
-        isListening = true;
-        mic.classList.add("active");
-        mic.textContent = "🔴 LISTENING...";
-        hud("LISTENING");
-    };
-    recognition.onend = () => {
-        isListening = false;
-        mic.classList.remove("active");
-        mic.textContent = "🎙 HOLD TO SPEAK";
-        if(hstat.textContent === "LISTENING") hud("READY");
-    };
-    recognition.onerror = () => { isListening = false; mic.classList.remove("active"); mic.textContent = "🎙 HOLD TO SPEAK"; };
-    recognition.onresult = (e) => {
-        const said = e.results[0][0].transcript.trim();
-        if(said) run(said);
-    };
-} else {
-    mic.disabled = true;
-    mic.textContent = "🎙 MIC NOT SUPPORTED";
-}
+    recognition.continuous = false; recognition.interimResults = false; recognition.lang = "en-US"; recognition.maxAlternatives = 1;
+    const start = e => { e.preventDefault(); if(isListening) return; try{recognition.start()}catch(err){} };
+    const stop  = e => { e.preventDefault(); if(!isListening) return; try{recognition.stop()}catch(err){} };
+    mic.addEventListener("mousedown", start); mic.addEventListener("mouseup", stop); mic.addEventListener("mouseleave", stop);
+    mic.addEventListener("touchstart", start, {passive:false}); mic.addEventListener("touchend", stop, {passive:false}); mic.addEventListener("touchcancel", stop, {passive:false});
+    recognition.onstart = () => { isListening=true; mic.classList.add("active"); mic.textContent="🔴 LISTENING..."; hud("LISTENING"); };
+    recognition.onend = () => { isListening=false; mic.classList.remove("active"); mic.textContent="🎙 HOLD TO SPEAK"; if(hstat.textContent==="LISTENING") hud("READY"); };
+    recognition.onerror = () => { isListening=false; mic.classList.remove("active"); mic.textContent="🎙 HOLD TO SPEAK"; };
+    recognition.onresult = e => { const s = e.results[0][0].transcript.trim(); if(s) run(s); };
+} else { mic.disabled = true; mic.textContent = "🎙 MIC NOT SUPPORTED"; }
 
 clr.onclick = () => {
     chat.innerHTML = `<div class="msg jar"><div class="tag">JARVIS</div><div class="txt">Chat cleared, Sir.</div></div>`;
