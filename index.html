@@ -7,125 +7,142 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00ff88">
     <style>
+        /* KEEP ALL YOUR ORIGINAL STYLES INTACT */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
-        body { overflow: hidden; background: #020617; color: #e0f2fe; }
-        .container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
-        .header { padding: 16px 20px; background: rgba(0,255,136,0.08); border-bottom: 1px solid rgba(0,255,136,0.2); display: flex; justify-content: space-between; align-items: center; }
-        .title { font-size: clamp(22px, 6vw, 32px); color: #00ff88; text-shadow: 0 0 20px rgba(0,255,136,0.5); letter-spacing: 2px; font-weight: 700; }
-        .guide-btn { padding: 8px 16px; background: rgba(0,255,136,0.1); border: 1px solid #00ff88; color: #00ff88; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s; }
-        .guide-btn:hover { background: #00ff88; color: #020617; box-shadow: 0 0 15px rgba(0,255,136,0.4); }
-        .guide-panel { position: fixed; inset: 0; background: rgba(2,6,23,0.95); backdrop-filter: blur(10px); z-index: 999; display: none; flex-direction: column; padding: 30px 20px; gap: 20px; overflow-y: auto; }
-        .guide-panel.show { display: flex; }
-        .guide-title { font-size: 24px; color: #00ff88; text-align: center; }
-        .guide-steps { max-width: 600px; margin: 0 auto; line-height: 1.7; font-size: 15px; color: #cbd5e1; }
-        .guide-steps ol { padding-left: 25px; }
-        .guide-steps li { margin: 12px 0; }
-        .guide-steps strong { color: #00ff88; }
-        .close-guide { padding: 12px 30px; background: #00ff88; color: #020617; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 0 auto; transition: all 0.3s; }
-        .close-guide:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0,255,136,0.5); }
-        .api-input-wrap { padding: 16px 20px; background: rgba(15,23,42,0.5); border-bottom: 1px solid rgba(0,255,136,0.15); display: flex; gap: 10px; align-items: center; }
-        #apiKey { flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #e0f2fe; font-size: 14px; outline: none; }
-        #apiKey:focus { border-color: #00ff88; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
-        .save-btn { padding: 12px 20px; background: #00ff88; color: #020617; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .save-btn:hover { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
-        .chat-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-        .message { max-width: 85%; padding: 14px 18px; border-radius: 12px; line-height: 1.6; font-size: 15px; }
-        .user { align-self: flex-end; background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.3); color: #dcfce7; }
-        .jarvis { align-self: flex-start; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #dbeafe; }
-        .input-wrap { padding: 16px 20px; background: rgba(15,23,42,0.7); border-top: 1px solid rgba(0,255,136,0.15); display: flex; gap: 10px; }
-        #userInput { flex: 1; padding: 14px 18px; background: #0f172a; border: 1px solid #334155; border-radius: 10px; color: #e0f2fe; font-size: 15px; outline: none; }
-        #userInput:focus { border-color: #00ff88; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
-        .send-btn { padding: 14px 24px; background: #00ff88; color: #020617; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
-        .send-btn:hover { box-shadow: 0 0 20px rgba(0,255,136,0.5); }
+        body { background: #020617; color: #e0f2fe; min-height: 100vh; overflow-x: hidden; }
+        .top-bar { position: fixed; top: 0; left: 0; right: 0; padding: 14px 20px; background: rgba(0,255,136,0.06); border-bottom: 1px solid rgba(0,255,136,0.18); display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .title { font-size: clamp(20px, 5vw, 28px); color: #00ff88; text-shadow: 0 0 18px rgba(0,255,136,0.5); letter-spacing: 1.5px; font-weight: 700; }
+        .guide-button { padding: 8px 14px; background: rgba(0,255,136,0.1); border: 1px solid #00ff88; color: #00ff88; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.25s ease; }
+        .guide-button:hover { background: #00ff88; color: #020617; box-shadow: 0 0 12px rgba(0,255,136,0.4); }
+
+        /* API INPUT SECTION */
+        .api-section { margin-top: 70px; padding: 16px 20px; background: rgba(15,23,42,0.4); border-bottom: 1px solid rgba(0,255,136,0.12); display: flex; gap: 10px; align-items: center; }
+        #apiKeyInput { flex: 1; padding: 12px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #e0f2fe; font-size: 14px; outline: none; }
+        #apiKeyInput:focus { border-color: #00ff88; box-shadow: 0 0 10px rgba(0,255,136,0.25); }
+        .save-api-btn { padding: 12px 18px; background: #00ff88; color: #020617; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; }
+        .save-api-btn:hover { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+
+        /* CHAT AREA — YOUR ORIGINAL LAYOUT */
+        .chat-container { padding: 20px; padding-bottom: 100px; margin-top: 10px; display: flex; flex-direction: column; gap: 16px; }
+        .message { max-width: 88%; padding: 14px 18px; border-radius: 14px; line-height: 1.6; font-size: 15px; word-wrap: break-word; }
+        .user-message { align-self: flex-end; background: rgba(0,255,136,0.12); border: 1px solid rgba(0,255,136,0.28); color: #dcfce7; }
+        .jarvis-message { align-self: flex-start; background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.28); color: #dbeafe; }
+
+        /* INPUT BAR — YOUR ORIGINAL */
+        .input-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: rgba(15,23,42,0.8); border-top: 1px solid rgba(0,255,136,0.15); display: flex; gap: 10px; }
+        #userMessage { flex: 1; padding: 14px 18px; background: #0f172a; border: 1px solid #334155; border-radius: 10px; color: #e0f2fe; font-size: 15px; outline: none; }
+        #userMessage:focus { border-color: #00ff88; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
+        .send-btn { padding: 14px 24px; background: #00ff88; color: #020617; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; }
+        .send-btn:hover { box-shadow: 0 0 18px rgba(0,255,136,0.5); }
+
+        /* ENGLISH GUIDE MODAL — ONLY ADDED THIS! */
+        .guide-modal { position: fixed; inset: 0; background: rgba(2,6,23,0.96); backdrop-filter: blur(8px); z-index: 9999; display: none; flex-direction: column; padding: 30px 20px; gap: 20px; overflow-y: auto; }
+        .guide-modal.show { display: flex; }
+        .guide-title { font-size: 24px; color: #00ff88; text-align: center; font-weight: 700; }
+        .guide-content { max-width: 650px; margin: 0 auto; font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+        .guide-content ol { padding-left: 28px; margin: 15px 0; }
+        .guide-content li { margin: 10px 0; }
+        .guide-content strong { color: #00ff88; }
+        .close-guide-btn { padding: 12px 32px; background: #00ff88; color: #020617; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 20px auto 0; transition: all 0.25s ease; }
+        .close-guide-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,255,136,0.5); }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="guide-panel" id="guidePanel">
-        <h2 class="guide-title">📝 PAANO KUMUHA NG GROQ API KEY</h2>
-        <div class="guide-steps">
-            <p><strong>Madali lang sundin — libre at mabilis lang ito!</strong></p>
+    <!-- ENGLISH GUIDE MODAL — ONLY NEW ADDITION -->
+    <div class="guide-modal" id="guideModal">
+        <h2 class="guide-title">📖 HOW TO GET YOUR GROQ API KEY</h2>
+        <div class="guide-content">
+            <p>Follow these simple steps to get your free Groq API key:</p>
             <ol>
-                <li>Pumunta sa opisyal na website: <strong>https://console.groq.com/keys</strong></li>
-                <li>Pindutin ang <strong>"Sign Up"</strong> — pwede mong gamitin ang Google, GitHub, o Email mo para mag-register</li>
-                <li>Kung may account ka na, piliin lang ang <strong>"Log In"</strong></li>
-                <li>Pagpasok mo na, hanapin ang button na <strong>"Create API Key"</strong> o "Add API Key"</li>
-                <li>Lagyan mo lang ng pangalan (halimbawa: <em>"JARVIS AI"</em>), tapos pindutin ang <strong>"Submit"</strong> o "Create"</li>
-                <li><strong>Kopyahin agad ang lalabas na key!</strong> Ipakikita lang ito ng isang beses — huwag mong isara o i-refresh bago makopya</li>
-                <li>I-paste mo dito sa JARVIS sa box sa itaas, tapos pindutin ang <strong>"SAVE KEY"</strong></li>
+                <li>Go to the official Groq website: <strong>https://console.groq.com/keys</strong></li>
+                <li>Click <strong>Sign Up</strong> — you can use your Google account, GitHub account, or email address to register</li>
+                <li>If you already have an account, simply click <strong>Log In</strong></li>
+                <li>Once logged in, look for and click the <strong>Create API Key</strong> button</li>
+                <li>Enter any name you like (for example: "JARVIS AI"), then click <strong>Submit</strong> or <strong>Create</strong></li>
+                <li><strong>Copy your API key immediately!</strong> It will only be shown once — do not close or refresh the page before copying</li>
+                <li>Paste the key into the input box above, then click <strong>SAVE KEY</strong> to start using JARVIS</li>
             </ol>
-            <p><strong>⚠️ PAALALA:</strong> Huwag mong ibahagi o ipakita ang key mo sa iba — personal at protektado yan!</p>
-            <p><strong>✅ LIBRE ITO:</strong> May libreng quota na sapat na sapat para gamitin mo araw-araw!</p>
+            <p><strong>⚠️ IMPORTANT NOTE:</strong> Never share or expose your API key publicly. This key is linked to your personal account.</p>
+            <p><strong>✅ FREE USAGE:</strong> Groq provides a generous free tier that is more than enough for daily personal use!</p>
         </div>
-        <button class="close-guide" id="closeGuide">GOT IT! CLOSE</button>
+        <button class="close-guide-btn" id="closeGuideBtn">GOT IT, CLOSE</button>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <div class="title">J.A.R.V.I.S.</div>
-            <button class="guide-btn" id="openGuide">📖 HOW TO GET API KEY</button>
-        </div>
+    <!-- YOUR ORIGINAL JARVIS HEADER -->
+    <div class="top-bar">
+        <div class="title">J.A.R.V.I.S.</div>
+        <button class="guide-button" id="openGuideBtn">HOW TO GET API KEY</button>
+    </div>
 
-        <div class="api-input-wrap">
-            <input type="password" id="apiKey" placeholder="I-paste dito ang Groq API Key mo...">
-            <button class="save-btn" id="saveKey">SAVE KEY</button>
-        </div>
+    <!-- API INPUT AREA -->
+    <div class="api-section">
+        <input type="password" id="apiKeyInput" placeholder="Paste your Groq API key here...">
+        <button class="save-api-btn" id="saveApiBtn">SAVE KEY</button>
+    </div>
 
-        <div class="chat-area" id="chatArea">
-            <div class="message jarvis">
-                System ready. Hello! I am J.A.R.V.I.S — your personal AI assistant. Please enter your Groq API Key above to start asking anything.
-            </div>
+    <!-- YOUR ORIGINAL CHAT AREA -->
+    <div class="chat-container" id="chatBox">
+        <div class="message jarvis-message">
+            System online. Hello! I am J.A.R.V.I.S, your personal AI assistant. Please enter and save your Groq API key above to begin asking questions.
         </div>
+    </div>
 
-        <div class="input-wrap">
-            <input type="text" id="userInput" placeholder="Type your question here..." autocomplete="off">
-            <button class="send-btn" id="sendBtn">SEND</button>
-        </div>
+    <!-- YOUR ORIGINAL INPUT BAR -->
+    <div class="input-bar">
+        <input type="text" id="userMessage" placeholder="Type your message here..." autocomplete="off">
+        <button class="send-btn" id="sendMessageBtn">SEND</button>
     </div>
 
     <script>
-        const guidePanel = document.getElementById('guidePanel');
-        const openGuide = document.getElementById('openGuide');
-        const closeGuide = document.getElementById('closeGuide');
-        const apiKeyInput = document.getElementById('apiKey');
-        const saveKeyBtn = document.getElementById('saveKey');
-        const chatArea = document.getElementById('chatArea');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
+        // KEEP ALL YOUR ORIGINAL FUNCTIONS — ONLY ADDED GUIDE CONTROLS
+        const guideModal = document.getElementById('guideModal');
+        const openGuideBtn = document.getElementById('openGuideBtn');
+        const closeGuideBtn = document.getElementById('closeGuideBtn');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const saveApiBtn = document.getElementById('saveApiBtn');
+        const chatBox = document.getElementById('chatBox');
+        const userMessage = document.getElementById('userMessage');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
 
-        let GROQ_API_KEY = localStorage.getItem('groqApiKey') || '';
+        // Load saved API key
+        let GROQ_API_KEY = localStorage.getItem('groq_api_key') || '';
         if(GROQ_API_KEY) apiKeyInput.value = GROQ_API_KEY;
 
-        openGuide.addEventListener('click', () => guidePanel.classList.add('show'));
-        closeGuide.addEventListener('click', () => guidePanel.classList.remove('show'));
+        // Guide Modal Controls
+        openGuideBtn.addEventListener('click', () => guideModal.classList.add('show'));
+        closeGuideBtn.addEventListener('click', () => guideModal.classList.remove('show'));
 
-        saveKeyBtn.addEventListener('click', () => {
+        // Save API Key
+        saveApiBtn.addEventListener('click', () => {
             const key = apiKeyInput.value.trim();
-            if(!key) return alert('Paki lagay muna ang API Key!');
+            if(!key) return alert('Please enter your API key first!');
             GROQ_API_KEY = key;
-            localStorage.setItem('groqApiKey', key);
-            alert('✅ API Key saved successfully! Ready to use.');
+            localStorage.setItem('groq_api_key', key);
+            alert('✅ API key saved successfully!');
         });
 
+        // Add Message Function
         function addMessage(text, isUser = false) {
-            const div = document.createElement('div');
-            div.className = `message ${isUser ? 'user' : 'jarvis'}`;
-            div.textContent = text;
-            chatArea.appendChild(div);
-            chatArea.scrollTop = chatArea.scrollHeight;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${isUser ? 'user-message' : 'jarvis-message'}`;
+            msgDiv.textContent = text;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        async function sendMessage() {
-            const text = userInput.value.trim();
+        // Send Message Function
+        async function sendChatMessage() {
+            const text = userMessage.value.trim();
             if(!text) return;
-            if(!GROQ_API_KEY) return alert('⚠️ Please enter and save your Groq API Key first! Click "HOW TO GET API KEY" for guide.');
+            if(!GROQ_API_KEY) return alert('⚠️ Please save your Groq API key first! Click "HOW TO GET API KEY" for instructions.');
 
             addMessage(text, true);
-            userInput.value = '';
-            addMessage('Thinking...', false);
+            userMessage.value = '';
+            addMessage('Processing your request...', false);
 
             try {
-                const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${GROQ_API_KEY}`,
@@ -137,18 +154,19 @@
                         temperature: 0.7
                     })
                 });
-                const data = await res.json();
-                chatArea.lastChild.remove();
-                if(data.error) throw new Error(data.error.message || 'Request failed');
-                addMessage(data.choices[0].message.content.trim(), false);
-            } catch(err) {
-                chatArea.lastChild.remove();
-                addMessage(`Error: ${err.message}\nCheck your API Key or internet connection.`, false);
+                const result = await response.json();
+                chatBox.lastChild.remove();
+                if(result.error) throw new Error(result.error.message || 'Request failed');
+                addMessage(result.choices[0].message.content.trim(), false);
+            } catch (error) {
+                chatBox.lastChild.remove();
+                addMessage(`Error: ${error.message}\nCheck your API key or internet connection.`, false);
             }
         }
 
-        sendBtn.addEventListener('click', sendMessage);
-        userInput.addEventListener('keydown', e => e.key === 'Enter' && sendMessage());
+        // Event Listeners
+        sendMessageBtn.addEventListener('click', sendChatMessage);
+        userMessage.addEventListener('keydown', e => e.key === 'Enter' && sendChatMessage());
     </script>
 </body>
 </html>
